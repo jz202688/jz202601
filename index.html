@@ -1,794 +1,544 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="site-title">砚舟博客</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: "PingFang SC", "Microsoft YaHei", "Arial", sans-serif;
-      background: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
-    }
-
-    .top-nav {
-      background: #fff;
-      padding: 15px 20px;
-      text-align: right;
-      border-bottom: 1px solid #eee;
-      position: sticky;
-      top: 0;
-      z-index: 99;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .lang-select {
-      padding: 6px 10px;
-      border: 1px solid #4CAF50;
-      border-radius: 4px;
-      background: #fff;
-      color: #4CAF50;
-      font-size: 14px;
-      cursor: pointer;
-      outline: none;
-    }
-    .lang-select:hover, .lang-select:focus {
-      background: #4CAF50;
-      color: #fff;
-    }
-
-    .top-nav a {
-      display: inline-block;
-      padding: 8px 15px;
-      color: #333;
-      text-decoration: none;
-      font-size: 15px;
-      margin-left: 5px;
-      border-bottom: 2px solid transparent;
-      transition: all 0.25s ease;
-    }
-    .top-nav a:hover, .top-nav a.active {
-      color: #4CAF50;
-      border-bottom: 2px solid #4CAF50;
-    }
-
-    header {
-      background: #fff;
-      padding: 40px 20px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-    }
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 15px;
-      border: 3px solid #4CAF50;
-    }
-    .name { font-size: 24px; margin-bottom: 8px; }
-    .intro { color: #666; font-size: 15px; }
-
-    .container {
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 0 20px;
-    }
-    section { margin-bottom: 40px; }
-    h2 {
-      font-size: 20px;
-      margin-bottom: 18px;
-      color: #222;
-      border-left: 4px solid #4CAF50;
-      padding-left: 10px;
-    }
-    .text-block {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 25px;
-      text-align: justify;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    .big-photo {
-      width: 100%;
-      max-height: 320px;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      cursor: pointer;
-      margin-bottom: 18px;
-      transition: transform 0.3s ease;
-    }
-    .big-photo:hover { transform: scale(1.01); }
-
-    .pic-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-    .pic-card {
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-      border-radius: 10px;
-      padding: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-    }
-    .pic-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    }
-    .pic-card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-bottom: 12px;
-    }
-    .pic-desc {
-      font-size: 14px;
-      color: #444;
-      line-height: 1.5;
-      padding: 0 5px 8px;
-      flex-grow: 1;
-      text-align: center;
-    }
-
-    .map-search-box {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      margin-bottom: 40px;
-    }
-    .map-embed {
-      width: 100%;
-      height: 300px;
-      border: 0;
-      border-radius: 6px;
-      margin-bottom: 20px;
-    }
-    .search-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-    }
-    .search-btn {
-      padding: 10px 20px;
-      background: #4CAF50;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background 0.2s;
-    }
-    .search-btn:hover { background: #45a049; }
-
-    .img-modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.9);
-      padding: 20px;
-      overflow: auto;
-    }
-    .img-modal img {
-      max-width: 100%;
-      max-height: 85vh;
-      margin: auto;
-      display: block;
-      border-radius: 6px;
-    }
-    .img-modal.show { display: block; }
-    .close-btn {
-      position: absolute;
-      top: 20px; right: 30px;
-      color: #fff;
-      font-size: 35px;
-      font-weight: bold;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-    }
-    .close-btn:hover { color: #ccc; }
-
-    .links a {
-      display: block;
-      color: #2196F3;
-      text-decoration: none;
-      padding: 12px 15px;
-      margin-bottom: 8px;
-      background: #fff;
-      border-radius: 6px;
-      transition: background 0.2s;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
-    }
-    .links a:hover { background: #eaf4fe; }
-
-    footer {
-      background-color: #208040;
-      color: #ffffff;
-      padding: 40px 20px 20px;
-      margin-top: 50px;
-    }
-    .footer-container {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 30px;
-      margin-bottom: 20px;
-    }
-    .footer-col h3 {
-      font-size: 17px;
-      margin-bottom: 15px;
-      font-weight: 600;
-    }
-    .footer-menu a {
-      display: block;
-      color: #fff;
-      text-decoration: none;
-      padding: 6px 0;
-      opacity: 0.9;
-      transition: 0.2s;
-    }
-    .footer-menu a:hover { opacity: 1; text-decoration: underline; }
-
-    .contact-text p { margin: 6px 0; font-size: 15px; }
-    .social-icons { margin-top: 12px; }
-    .social-icons a {
-      color: #fff;
-      font-size: 22px;
-      margin-right: 12px;
-      text-decoration: none;
-    }
-    .social-icons a:hover { opacity: 0.8; }
-
-    .subscribe-form input[type="email"] {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-      margin-bottom: 10px;
-      font-size: 15px;
-      color: #333;
-    }
-    .subscribe-form button {
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      padding: 9px 25px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 15px;
-      transition: background 0.2s;
-    }
-    .subscribe-form button:hover { background-color: #45a049; }
-
-    .copyright {
-      text-align: center;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.2);
-      font-size: 13px;
-      opacity: 0.85;
-    }
-
-    @media (max-width: 600px) {
-      .top-nav { text-align: center; justify-content: center; }
-      .top-nav a { margin: 3px; padding: 6px 10px; font-size: 14px; }
-    }
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-
-  <nav class="top-nav">
-    <a href="#" class="active" data-i18n="nav-home">首页</a>
-    <a href="#" data-i18n="nav-about">关于我们</a>
-    <a href="#footer-contact" data-i18n="nav-contact">联系我们</a>
-    <a href="#" data-i18n="nav-terms">条款与细则</a>
-    <!-- 保留语言切换下拉框（含印地语） -->
-    <select class="lang-select" id="langSelector">
-      <option value="zh">中文</option>
-      <option value="en">English</option>
-      <option value="hi">हिन्दी (印地语)</option>
-      <option value="es">Español</option>
-      <option value="ja">日本語</option>
-      <option value="fr">Français</option>
-      <option value="de">Deutsch</option>
-      <option value="ru">Русский</option>
-      <option value="ar">العربية</option>
-      <option value="pt">Português</option>
-    </select>
-  </nav>
-
-  <header>
-    <img src="avatar.jpg" alt="我的头像" class="avatar">
-    <h1 class="name" data-i18n="user-name">砚舟</h1>
-    <p class="intro" data-i18n="site-intro">美好的时光/美丽的风景</p>
-  </header>
-
-  <main class="container">
-    <section>
-      <h2 data-i18n="section-iguazu">伊瓜苏大瀑布</h2>
-      <div class="text-block">
-        <p data-i18n="iguazu-p1">伊瓜苏大瀑布（Iguazu Falls）是世界上最宽的瀑布群，横跨阿根廷与巴西，世界著名自然奇观。</p>
+<html style="margin:0;padding:0;">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+(function(){
+  var s = document.createElement('style');
+  s.textContent = ':root{--bg:#fefcf8;--card:#ffffff;--text:#0f172a;--muted:#64748b;--accent:#ea580c;--accent-soft:rgba(234,88,12,.14);--accent2:#16a34a;--accent2-soft:rgba(22,163,74,.14);--border:rgba(15,23,42,.07)}.reveal{opacity:0;transform:translateY(20px);animation:fadeUp .6s ease forwards}.reveal:nth-child(2){animation-delay:.1s}.reveal:nth-child(3){animation-delay:.2s}.reveal:nth-child(4){animation-delay:.3s}.reveal:nth-child(5){animation-delay:.4s}.reveal:nth-child(6){animation-delay:.5s}@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}.product-card{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.product-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.1);border-color:var(--accent)}.category-btn{transition:all .2s ease}.category-btn:hover,.category-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.cart-badge{animation:pulse .3s ease}@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}.hero-gradient{background:linear-gradient(135deg,rgba(234,88,12,.08),rgba(22,163,74,.06))}';
+  document.head.appendChild(s);
+})();
+</script><script async src="https://js.mbidadm.com/static/scripts.js" data-admpid="450079"></script>
+<div style="background-color:transparent;box-sizing:border-box;">
+  <div style="color:var(--text);font-family:'Quicksand',sans-serif;background:var(--bg);min-height:100%;">
+    
+    <!-- 顶部导航栏 -->
+<script async src="https://js.mbidadm.com/static/scripts.js" data-admpid="450079"></script>
+    <header class="sticky top-0 z-50" style="background:rgba(254,252,248,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+          <!-- Logo -->
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:42px;height:42px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                <path d="M3 6h18"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+            </div>
+            <div>
+              <h1 style="font-size:22px;font-weight:700;color:var(--text);line-height:1;">Sabores</h1>
+              <p style="font-size:11px;color:var(--muted);letter-spacing:.05em;">ALIMENTOS FRESCOS</p>
+            </div>
+          </div>
+          
+          <!-- 搜索框 -->
+          <div style="flex:1;min-width:200px;max-width:480px;position:relative;">
+            <div style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+              </svg>
+            </div>
+            <input type="text" placeholder="Buscar productos..." style="width:100%;padding:12px 16px 12px 42px;border-radius:12px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;color:var(--text);outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+          
+          <!-- 右侧图标 -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button style="width:42px;height:42px;border-radius:10px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+            <button id="cartBtn" style="width:42px;height:42px;border-radius:10px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);position:relative;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="8" cy="21" r="1"/>
+                <circle cx="19" cy="21" r="1"/>
+                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+              </svg>
+              <span id="cartCount" style="position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--accent);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">0</span>
+            </button>
+          </div>
+        </div>
       </div>
-      <img src="big-falls.jpg" alt="伊瓜苏全景大图" class="big-photo" onclick="openImg(this.src)">
-      <div class="text-block">
-        <p data-i18n="iguazu-detail">伊瓜苏瀑布宽近2.7公里，由275个瀑布组成，标志性“魔鬼之咽”气势磅礴，被列入世界自然遗产、世界新七大自然奇观之一。</p>
-      </div>
-      <div class="pic-grid">
-        <div class="pic-card">
-          <img src="img1.jpg" alt="伊瓜苏风景" onclick="openImg(this.src)">
-          <p class="pic-desc" data-i18n="pic1-desc">彩虹与狂流：晴天常见彩虹横跨水雾与雨林</p>
-        </div>
-        <div class="pic-card">
-          <img src="img2.jpg" alt="伊瓜苏风景" onclick="openImg(this.src)">
-          <p class="pic-desc" data-i18n="pic2-desc">鸟瞰视角：雨林中大河断裂汇入深谷的壮观地貌</p>
-        </div>
-        <div class="pic-card">
-          <img src="img3.jpg" alt="伊瓜苏风景" onclick="openImg(this.src)">
-          <p class="pic-desc" data-i18n="pic3-desc">魔鬼之咽：半圆形峡谷水流密集倾泻，水汽翻腾</p>
-        </div>
-        <div class="pic-card">
-          <img src="img4.jpg" alt="伊瓜苏风景" onclick="openImg(this.src)">
-          <p class="pic-desc" data-i18n="pic4-desc">阳光穿透水雾，绚丽彩虹横跨瀑布</p>
-        </div>
-        <div class="pic-card">
-          <img src="img5.jpg" alt="伊瓜苏风景" onclick="openImg(this.src)">
-          <p class="pic-desc" data-i18n="pic5-desc">阿根廷栈道：近距离感受飞溅水花</p>
-        </div>
-        <div class="pic-card">
-          <img src="img6.jpg" alt="伊瓜苏风景" onclick="openImg(this.src)">
-          <p class="pic-desc" data-i18n="pic6-desc">巴西全景：一眼尽览整片瀑布群</p>
-        </div>
-        <div class="pic-card">
-          <img src="img7.jpg" alt="伊瓜苏风景" onclick="openImg(this.src)">
-          <p class="pic-desc" data-i18n="pic7-desc">雨林碧水蓝天，生机与水景相融</p>
-        </div>
-        <div class="pic-card">
-          <img src="img8.jpg" alt="伊瓜苏风景" onclick="openImg(this.src)">
-          <p class="pic-desc" data-i18n="pic8-desc">暮色时分，瀑布静谧温柔</p>
+    </header>
+
+    <!-- Hero 区域 -->
+    <section class="hero-gradient reveal" style="padding:48px 0 32px;">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div style="display:grid;grid-template-columns:1fr;gap:32px;align-items:center;" class="lg:grid-cols-2">
+          <div>
+            <p style="font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px;">Bienvenido a Sabores</p>
+            <h2 style="font-size:clamp(28px,4vw,48px);font-weight:700;line-height:1.15;color:var(--text);margin-bottom:16px;">
+              Los mejores <span style="background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;">alimentos frescos</span> directamente a tu puerta
+            </h2>
+            <p style="font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:500px;">
+              Descubre nuestra selección de productos frescos, desde panes artesanales hasta carnes premium. Calidad garantizada y precios increíbles.
+            </p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <button style="padding:14px 28px;border-radius:12px;background:var(--accent);color:#fff;font-weight:600;font-size:15px;border:none;cursor:pointer;font-family:inherit;" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">
+                Ver productos
+              </button>
+              <button style="padding:14px 28px;border-radius:12px;background:var(--card);color:var(--text);font-weight:600;font-size:15px;border:1px solid var(--border);cursor:pointer;font-family:inherit;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)'">
+                Ofertas especiales
+              </button>
+            </div>
+            <div style="display:flex;gap:32px;margin-top:32px;flex-wrap:wrap;">
+              <div>
+                <p style="font-size:28px;font-weight:700;color:var(--text);">500+</p>
+                <p style="font-size:13px;color:var(--muted);">Productos frescos</p>
+              </div>
+              <div>
+                <p style="font-size:28px;font-weight:700;color:var(--text);">24h</p>
+                <p style="font-size:13px;color:var(--muted);">Entrega rápida</p>
+              </div>
+              <div>
+                <p style="font-size:28px;font-weight:700;color:var(--text);">100%</p>
+                <p style="font-size:13px;color:var(--muted);">Calidad garantizada</p>
+              </div>
+            </div>
+          </div>
+          <div style="position:relative;">
+            <div style="border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(234,88,12,.15);">
+              <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/eb90667fc89d4a3598188749af7f14fa.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789560&x-signature=926pZzNwjxywkv%2BW63tRHNTElMI%3D" alt="Panes frescos" style="width:100%;height:380px;object-fit:cover;display:block;" onerror="this.style.display='none'">
+            </div>
+            <div style="position:absolute;bottom:-16px;left:-16px;background:var(--card);padding:16px 20px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.1);border:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="width:40px;height:40px;border-radius:10px;background:var(--accent2-soft);display:flex;align-items:center;justify-content:center;color:var(--accent2);">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6 9 17l-5-5"/>
+                  </svg>
+                </div>
+                <div>
+                  <p style="font-weight:700;font-size:14px;color:var(--text);">Producto destacado</p>
+                  <p style="font-size:12px;color:var(--muted);">Panes recién horneados</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="map-search-box">
-      <h2 data-i18n="section-location">位置与便捷搜索</h2>
-      <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3455.876325334567!2d-56.18585638457243!3d-34.90394897193238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x959f80b8b1b8b1b1%3A0x123456789abcdef!2sMontevideo%2C%20Uruguay!5e0!3m2!1szh-CN!2scn!4v1620000000000!5m2!1szh-CN!2scn" 
-        class="map-embed" 
-        allowfullscreen="" 
-        loading="lazy">
-      </iframe>
-      <div class="search-buttons">
-        <a href="https://www.google.com/search?q=伊瓜苏大瀑布+详细介绍" target="_blank" class="search-btn" data-i18n="btn-iguazu">🔍 伊瓜苏详情</a>
-        <a href="https://www.google.com/search?q=阿根廷+著名自然景点" target="_blank" class="search-btn" data-i18n="btn-arg">🌎 阿根廷景点</a>
-        <a href="https://www.google.com/search?q=南美旅行攻略+巴西阿根廷" target="_blank" class="search-btn" data-i18n="btn-travel">✈️ 南美旅行攻略</a>
-        <a href="https://www.google.com/search?q=世界自然遗产+壮丽瀑布" target="_blank" class="search-btn" data-i18n="btn-waterfall">💧 世界瀑布景观</a>
-        <a href="https://www.google.com/maps/search/伊瓜苏大瀑布" target="_blank" class="search-btn" data-i18n="btn-map">🗺️ 地图搜索伊瓜苏</a>
-      </div>
-    </div>
-
-    <section id="footer-contact">
-      <h2 data-i18n="section-recommend">推荐与链接</h2>
-      <div class="links">
-        <a href="https://zhihu.com" target="_blank" data-i18n="link-articles">📝 我的文章合集</a>
-        <a href="https://developer.mozilla.org/zh-CN/" target="_blank" data-i18n="link-learn">💻 学习资源分享</a>
-        <a href="https://www.toolnb.com" target="_blank" data-i18n="link-tools">📌 常用工具网站</a>
-        <a href="mailto:gao52068@gmail.com" data-i18n="link-email">✉️ 联系我（邮箱）: gao52068@gmail.com</a>
+    <!-- 分类筛选 -->
+    <section class="reveal" style="padding:24px 0;">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;">
+          <button class="category-btn active" data-category="all" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+            Todos
+          </button>
+          <button class="category-btn" data-category="panaderia" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+            Panadería
+          </button>
+          <button class="category-btn" data-category="carnes" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+            Carnes
+          </button>
+          <button class="category-btn" data-category="quesos" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+            Quesos y Fiambres
+          </button>
+          <button class="category-btn" data-category="frutas" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+            Frutas y Verduras
+          </button>
+          <button class="category-btn" data-category="pastas" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+            Pastas
+          </button>
+          <button class="category-btn" data-category="mariscos" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+            Mariscos
+          </button>
+          <button class="category-btn" data-category="postres" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+            Postres
+          </button>
+          <button class="category-btn" data-category="saludable" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+            Saludable
+          </button>
+        </div>
       </div>
     </section>
-  </main>
 
-  <div id="imgModal" class="img-modal" onclick="closeImg()">
-    <span class="close-btn">&times;</span>
-    <img id="modalImg" src="" alt="大图查看">
+    <!-- 商品展示区域 -->
+    <section class="reveal" style="padding:16px 0 64px;">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h3 style="font-size:24px;font-weight:700;color:var(--text);margin-bottom:4px;">Productos destacados</h3>
+            <p style="font-size:14px;color:var(--muted);">Selección de los más vendidos esta semana</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:13px;color:var(--muted);">Ordenar por:</span>
+            <select style="padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:13px;color:var(--text);cursor:pointer;outline:none;">
+              <option>Recomendados</option>
+              <option>Precio: menor a mayor</option>
+              <option>Precio: mayor a menor</option>
+              <option>Más vendidos</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 商品网格 -->
+        <div id="productsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;">
+          <!-- 商品卡片将通过JS动态生成 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 特色服务 -->
+    <section class="reveal" style="padding:48px 0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;">
+          <div style="text-align:center;padding:20px;">
+            <div style="width:56px;height:56px;border-radius:16px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);margin:0 auto 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="3" width="15" height="13"/>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+            </div>
+            <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Envío rápido</h4>
+            <p style="font-size:13px;color:var(--muted);line-height:1.5;">Entrega en menos de 24 horas en toda la ciudad</p>
+          </div>
+          <div style="text-align:center;padding:20px;">
+            <div style="width:56px;height:56px;border-radius:16px;background:var(--accent2-soft);display:flex;align-items:center;justify-content:center;color:var(--accent2);margin:0 auto 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Calidad garantizada</h4>
+            <p style="font-size:13px;color:var(--muted);line-height:1.5;">Productos frescos y de la mejor calidad</p>
+          </div>
+          <div style="text-align:center;padding:20px;">
+            <div style="width:56px;height:56px;border-radius:16px;background:rgba(234,88,12,.1);display:flex;align-items:center;justify-content:center;color:var(--accent);margin:0 auto 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Atención 24/7</h4>
+            <p style="font-size:13px;color:var(--muted);line-height:1.5;">Estamos aquí para ayudarte en cualquier momento</p>
+          </div>
+          <div style="text-align:center;padding:20px;">
+            <div style="width:56px;height:56px;border-radius:16px;background:rgba(22,163,74,.1);display:flex;align-items:center;justify-content:center;color:var(--accent2);margin:0 auto 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/>
+                <path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                <path d="M5 7h14"/>
+              </svg>
+            </div>
+            <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Pagos seguros</h4>
+            <p style="font-size:13px;color:var(--muted);line-height:1.5;">Múltiples métodos de pago protegidos</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer style="padding:48px 0 24px;background:var(--bg);">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;margin-bottom:32px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+              <div style="width:36px;height:36px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                  <path d="M3 6h18"/>
+                  <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+              </div>
+              <span style="font-weight:700;font-size:18px;color:var(--text);">Sabores</span>
+            </div>
+            <p style="font-size:14px;color:var(--muted);line-height:1.6;">Tu tienda de alimentos de confianza. Calidad, frescura y el mejor sabor en cada producto.</p>
+          </div>
+          <div>
+            <h5 style="font-weight:700;font-size:15px;color:var(--text);margin-bottom:14px;">Categorías</h5>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Panadería</a></li>
+              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Carnes</a></li>
+              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Frutas y Verduras</a></li>
+              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Quesos y Fiambres</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 style="font-weight:700;font-size:15px;color:var(--text);margin-bottom:14px;">Ayuda</h5>
+            <ul style="list-style:none;padding:0;margin;margin:0;display:flex;flex-direction:column;gap:8px;">
+              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Centro de ayuda</a></li>
+              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Envíos y devoluciones</a></li>
+              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Términos y condiciones</a></li>
+              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Política de privacidad</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 style="font-weight:700;font-size:15px;color:var(--text);margin-bottom:14px;">Contacto</h5>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+              <li style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                +54 11 1234-5678
+              </li>
+              <li style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                hola@sabores.com.ar
+              </li>
+              <li style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Buenos Aires, Argentina
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:24px;text-align:center;">
+          <p style="font-size:13px;color:var(--muted);">© 2026 Sabores Alimentos. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
   </div>
+</div>
 
-  <footer>
-    <div class="footer-container">
-      <div class="footer-col">
-        <div class="footer-menu">
-          <a href="#" data-i18n="nav-home">首页</a>
-          <a href="#" data-i18n="nav-about">关于我们</a>
-          <a href="#footer-contact" data-i18n="nav-contact">联系我们</a>
-          <a href="#" data-i18n="nav-terms">条款与细则</a>
-        </div>
-      </div>
-
-      <div class="footer-col">
-        <h3 data-i18n="footer-contact-title">联系方式</h3>
-        <div class="contact-text">
-          <p>gao52068@gmail.com</p>
-          <p>whatsapp:(+54) 1157457773</p>
-        </div>
-        <h3 style="margin-top:20px;" data-i18n="footer-social">社交活动</h3>
-        <div class="social-icons">
-          <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/zheng20262026?utm_source=qr&igsh=MTBjZDUwanhmcGZxag==" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.tiktok.com/@zrj2026?_r=1&_t=ZS-985GeLtcDHZ" target="_blank"><i class="fab fa-tiktok"></i></a>
-          <a href="https://x.com/juanzheng12" target="_blank"><i class="fab fa-x"></i></a>
-        </div>
-      </div>
-
-      <div class="footer-col">
-        <h3 data-i18n="footer-subscribe">订阅我们的电子报</h3>
-        <form class="subscribe-form" onsubmit="alert('订阅成功！')">
-          <input type="email" placeholder="电子邮件 *" required>
-          <button type="submit" data-i18n="btn-subscribe">订阅</button>
-        </form>
-      </div>
-    </div>
-
-    <div class="copyright">
-      © 2026 gao520. All rights reserved.
-    </div>
-  </footer>
-
-  <script>
-    function openImg(src) {
-      document.getElementById('modalImg').src = src;
-      document.getElementById('imgModal').classList.add('show');
-      document.body.style.overflow = 'hidden';
+<script>
+(function(){
+  // 商品数据
+  var products = [
+    {
+      id: 1,
+      name: "Croissants de Mantequilla",
+      category: "panaderia",
+      weight: "200g",
+      price: 2890,
+      originalPrice: 3600,
+      discount: 20,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/eb90667fc89d4a3598188749af7f14fa.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789560&x-signature=926pZzNwjxywkv%2BW63tRHNTElMI%3D",
+      tag: "Popular"
+    },
+    {
+      id: 2,
+      name: "Tabla de Quesos y Fiambres",
+      category: "quesos",
+      weight: "500g",
+      price: 8900,
+      originalPrice: null,
+      discount: null,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/e8766f7e1850489e9ebaaf3078781014.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789562&x-signature=iRYIRz8WGMYeViBPvQYBVPqyjqE%3D",
+      tag: "Premium"
+    },
+    {
+      id: 3,
+      name: "Cesta de Frutas y Verduras",
+      category: "frutas",
+      weight: "3kg",
+      price: 4500,
+      originalPrice: 5800,
+      discount: 22,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/2096b217ced74474a5faabb36dfadcdc.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789561&x-signature=8t1v9hYomTRhRWf9GjcT11Yu%2BZ8%3D",
+      tag: "Oferta"
+    },
+    {
+      id: 4,
+      name: "Asado Argentino Premium",
+      category: "carnes",
+      weight: "1.2kg",
+      price: 12800,
+      originalPrice: null,
+      discount: null,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/033e8290974e4b349558903c70588904.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789563&x-signature=s5oliUsIEhhhnEP4a%2BKCW9QCLdU%3D",
+      tag: "Destacado"
+    },
+    {
+      id: 5,
+      name: "Fusilli con Salsa Pomodoro",
+      category: "pastas",
+      weight: "400g",
+      price: 1890,
+      originalPrice: 2400,
+      discount: 21,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/41a0051e84404c7280b4be5b40f98a9f.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789581&x-signature=hJMwu14cn7UHOLl2po%2F5ab%2F8KFo%3D",
+      tag: "Nuevo"
+    },
+    {
+      id: 6,
+      name: "Cocktail de Mariscos Frescos",
+      category: "mariscos",
+      weight: "600g",
+      price: 9600,
+      originalPrice: null,
+      discount: null,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/3677516cb2f04977aef52c802ca0a773.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789584&x-signature=6DE2gzxRP12QR6%2BHk5Z8IzfCryQ%3D",
+      tag: "Premium"
+    },
+    {
+      id: 7,
+      name: "Selección de Chocolates",
+      category: "postres",
+      weight: "350g",
+      price: 5200,
+      originalPrice: 6500,
+      discount: 20,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/0555f9950c434977b6573fb9ab3419dd.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789583&x-signature=EdzGReSyGcJDrck9lW4i%2B7weneg%3D",
+      tag: "Ideal para regalar"
+    },
+    {
+      id: 8,
+      name: "Ensalada Saludable Premium",
+      category: "saludable",
+      weight: "380g",
+      price: 2100,
+      originalPrice: null,
+      discount: null,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/062c21b56a3f4798afc33165b6f83dbe.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789580&x-signature=LnV2qWxmlEm7Mggga2tn0TYocS4%3D",
+      tag: "Saludable"
+    },
+    {
+      id: 9,
+      name: "Pan de Campo Artesanal",
+      category: "panaderia",
+      weight: "500g",
+      price: 1650,
+      originalPrice: null,
+      discount: null,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/eb90667fc89d4a3598188749af7f14fa.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789560&x-signature=926pZzNwjxywkv%2BW63tRHNTElMI%3D",
+      tag: "Artesanal"
+    },
+    {
+      id: 10,
+      name: "Queso Parmesano DOP",
+      category: "quesos",
+      weight: "300g",
+      price: 4800,
+      originalPrice: 5600,
+      discount: 14,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/e8766f7e1850489e9ebaaf3078781014.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789562&x-signature=iRYIRz8WGMYeViBPvQYBVPqyjqE%3D",
+      tag: "Importado"
+    },
+    {
+      id: 11,
+      name: "Corte de Carne Premium",
+      category: "carnes",
+      weight: "800g",
+      price: 7800,
+      originalPrice: null,
+      discount: null,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/033e8290974e4b349558903c70588904.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789563&x-signature=s5oliUsIEhhhnEP4a%2BKCW9QCLdU%3D",
+      tag: "Ternera"
+    },
+    {
+      id: 12,
+      name: "Frutas Tropicales Mix",
+      category: "frutas",
+      weight: "1.5kg",
+      price: 3200,
+      originalPrice: 4000,
+      discount: 20,
+      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/2096b217ced74474a5faabb36dfadcdc.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789561&x-signature=8t1v9hYomTRhRWf9GjcT11Yu%2BZ8%3D",
+      tag: "Fresco"
     }
-    function closeImg() {
-      document.getElementById('imgModal').classList.remove('show');
-      document.body.style.overflow = 'auto';
-    }
+  ];
 
-    // 多语言词库（含完整印地语）
-    const i18n = {
-      zh: {
-        "site-title": "砚舟博客",
-        "nav-home": "首页",
-        "nav-about": "关于我们",
-        "nav-contact": "联系我们",
-        "nav-terms": "条款与细则",
-        "user-name": "砚舟",
-        "site-intro": "美好的时光 / 美丽的风景",
-        "section-iguazu": "伊瓜苏大瀑布",
-        "iguazu-p1": "伊瓜苏大瀑布（Iguazu Falls）是世界上最宽的瀑布群，横跨阿根廷与巴西，世界著名自然奇观。",
-        "iguazu-detail": "伊瓜苏瀑布宽近2.7公里，由275个瀑布组成，标志性“魔鬼之咽”气势磅礴，被列入世界自然遗产、世界新七大自然奇观之一。",
-        "pic1-desc": "彩虹与狂流：晴天常见彩虹横跨水雾与雨林",
-        "pic2-desc": "鸟瞰视角：雨林中大河断裂汇入深谷的壮观地貌",
-        "pic3-desc": "魔鬼之咽：半圆形峡谷水流密集倾泻，水汽翻腾",
-        "pic4-desc": "阳光穿透水雾，绚丽彩虹横跨瀑布",
-        "pic5-desc": "阿根廷栈道：近距离感受飞溅水花",
-        "pic6-desc": "巴西全景：一眼尽览整片瀑布群",
-        "pic7-desc": "雨林碧水蓝天，生机与水景相融",
-        "pic8-desc": "暮色时分，瀑布静谧温柔",
-        "section-location": "位置与便捷搜索",
-        "btn-iguazu": "🔍 伊瓜苏详情",
-        "btn-arg": "🌎 阿根廷景点",
-        "btn-travel": "✈️ 南美旅行攻略",
-        "btn-waterfall": "💧 世界瀑布景观",
-        "btn-map": "🗺️ 地图搜索伊瓜苏",
-        "section-recommend": "推荐与链接",
-        "link-articles": "📝 我的文章合集",
-        "link-learn": "💻 学习资源分享",
-        "link-tools": "📌 常用工具网站",
-        "link-email": "✉️ 联系我（邮箱）: gao52068@gmail.com",
-        "footer-contact-title": "联系方式",
-        "footer-social": "社交活动",
-        "footer-subscribe": "订阅我们的电子报",
-        "btn-subscribe": "订阅"
-      },
-      en: {
-        "site-title": "Yanzhou's Blog",
-        "nav-home": "Home",
-        "nav-about": "About Us",
-        "nav-contact": "Contact Us",
-        "nav-terms": "Terms & Conditions",
-        "user-name": "Yanzhou",
-        "site-intro": "Beautiful moments / Beautiful scenery",
-        "section-iguazu": "Iguazu Falls",
-        "iguazu-p1": "Iguazu Falls — the world's widest waterfall system, spanning Argentina and Brazil, a world-famous natural wonder.",
-        "iguazu-detail": "Nearly 2.7km wide with 275 cascades; the iconic Devil's Throat is magnificent; listed as World Heritage and one of the New 7 Wonders of Nature.",
-        "pic1-desc": "Rainbow & torrent: rainbows often arch over mist & rainforest on sunny days",
-        "pic2-desc": "Aerial view: dramatic landscape where the river plunges into deep valleys",
-        "pic3-desc": "Devil's Throat: dense cascades in a horseshoe canyon with roaring mist",
-        "pic4-desc": "Sunlight through mist, vivid rainbow across the falls",
-        "pic5-desc": "Argentina walkways: feel splashing water up close",
-        "pic6-desc": "Brazil side: panoramic view of the whole falls",
-        "pic7-desc": "Rainforest, clear water & blue sky blending nature & water",
-        "pic8-desc": "Dusk: gentle, peaceful beauty in sunset glow",
-        "section-location": "Location & Quick Search",
-        "btn-iguazu": "🔍 Iguazu Details",
-        "btn-arg": "🌎 Argentina Attractions",
-        "btn-travel": "✈️ South America Travel Guide",
-        "btn-waterfall": "💧 World Waterfall Landscapes",
-        "btn-map": "🗺️ Map Search Iguazu",
-        "section-recommend": "Recommendations & Links",
-        "link-articles": "📝 My Articles",
-        "link-learn": "💻 Learning Resources",
-        "link-tools": "📌 Useful Websites",
-        "link-email": "✉️ Contact Me: gao52068@gmail.com",
-        "footer-contact-title": "Contact Info",
-        "footer-social": "Social Media",
-        "footer-subscribe": "Subscribe to Newsletter",
-        "btn-subscribe": "Subscribe"
-      },
-      hi: {
-        "site-title": "यानझोउ का ब्लॉग",
-        "nav-home": "मुख्य पृष्ठ",
-        "nav-about": "हमारे बारे में",
-        "nav-contact": "संपर्क करें",
-        "nav-terms": "नियम और शर्तें",
-        "user-name": "यानझोउ",
-        "site-intro": "सुंदर पल / सुंदर दृश्य",
-        "section-iguazu": "इगुआजू जलप्रपात",
-        "iguazu-p1": "इगुआजू जलप्रपात दुनिया का सबसे चौड़ा जलप्रपात समूह है, जो अर्जेंटीना और ब्राजील के बीच फैला हुआ है, विश्व प्रसिद्ध प्राकृतिक चमत्कार है।",
-        "iguazu-detail": "लगभग 2.7 किलोमीटर चौड़ा, 275 झरने; प्रसिद्ध «शैतान का गला» भव्य और प्रभावशाली; विश्व प्राकृतिक धरोहर और प्रकृति के सात नए आश्चर्यों में से एक।",
-        "pic1-desc": "इंद्रधनुष और तेज धारा: धूप वाले दिनों में कोहरे और वर्षावन के ऊपर इंद्रधनुष दिखता है",
-        "pic2-desc": "ऊपर से दृश्य: नदी गहरी घाटियों में गिरती हुई अद्भुत भूदृश्य",
-        "pic3-desc": "शैतान का गला: अर्धवृत्ताकार घाटी में घने जलप्रपात, चारों ओर पानी का कोहरा",
-        "pic4-desc": "धूप किरणें कोहरे से गुजरती हैं, जलप्रपात पर चमकदार इंद्रधनुष",
-        "pic5-desc": "अर्जेंटीना का रास्ता: पास से पानी के छींटे महसूस करें",
-        "pic6-desc": "ब्राजील का दृश्य: पूरे जलप्रपात समूह का एक ही नजारा",
-        "pic7-desc": "हरा वर्षावन, नीला पानी और आकाश, प्रकृति का सुंदर मेल",
-        "pic8-desc": "शाम का समय: शांत, सुंदर और शांतिपूर्ण दृश्य",
-        "section-location": "स्थान और तेज़ खोज",
-        "btn-iguazu": "🔍 विवरण देखें",
-        "btn-arg": "🌎 अर्जेंटीना के स्थान",
-        "btn-travel": "✈️ यात्रा मार्गदर्शक",
-        "btn-waterfall": "💧 विश्व के जलप्रपात",
-        "btn-map": "🗺️ मानचित्र पर खोजें",
-        "section-recommend": "सिफारिशें और लिंक",
-        "link-articles": "📝 मेरे लेख",
-        "link-learn": "💻 सीखने के स्रोत",
-        "link-tools": "📌 उपयोगी वेबसाइटें",
-        "link-email": "✉️ ईमेल: gao52068@gmail.com",
-        "footer-contact-title": "संपर्क जानकारी",
-        "footer-social": "सोशल मीडिया",
-        "footer-subscribe": "न्यूज़लेटर सदस्यता",
-        "btn-subscribe": "सदस्य बनें"
-      },
-      es: {
-        "site-title": "Blog de Yanzhou",
-        "nav-home": "Inicio",
-        "nav-about": "Sobre Nosotros",
-        "nav-contact": "Contáctanos",
-        "nav-terms": "Términos y Condiciones",
-        "user-name": "Yanzhou",
-        "site-intro": "Momentos hermosos / Paisajes hermosos",
-        "section-iguazu": "Cataratas del Iguazú",
-        "iguazu-p1": "Las Cataratas del Iguazú son el conjunto de cascadas más ancho del mundo, entre Argentina y Brasil, una maravilla natural mundial.",
-        "iguazu-detail": "Casi 2,7 km de ancho, 275 saltos; la Garganta del Diablo impresionante; Patrimonio de la Humanidad y una de las 7 Maravillas Naturales.",
-        "pic1-desc": "Arcoíris y corriente: arcoíris sobre la niebla y selva en días soleados",
-        "pic2-desc": "Vista aérea: río que cae espectacularmente hacia valles profundos",
-        "pic3-desc": "Garganta del Diablo: caídas densas en cañón en forma de herradura",
-        "pic4-desc": "Luz entre niebla, arcoíris brillante sobre las cataratas",
-        "pic5-desc": "Senderos argentinos: sentir el agua salpicando de cerca",
-        "pic6-desc": "Lado brasileño: vista panorámica de todo el conjunto",
-        "pic7-desc": "Selva, agua clara y cielo azul unen naturaleza y agua",
-        "pic8-desc": "Atardecer: belleza tranquila bajo el sol poniente",
-        "section-location": "Ubicación y Búsqueda",
-        "btn-iguazu": "🔍 Detalles Iguazú",
-        "btn-arg": "🌎 Lugares de Argentina",
-        "btn-travel": "✈️ Guía Sudamérica",
-        "btn-waterfall": "💧 Cascadas del mundo",
-        "btn-map": "🗺️ Mapa Iguazú",
-        "section-recommend": "Recomendaciones y Enlaces",
-        "link-articles": "📝 Mis Artículos",
-        "link-learn": "💻 Recursos de Aprendizaje",
-        "link-tools": "📌 Sitios Útiles",
-        "link-email": "✉️ Escríbeme: gao52068@gmail.com",
-        "footer-contact-title": "Contacto",
-        "footer-social": "Redes Sociales",
-        "footer-subscribe": "Suscríbete al boletín",
-        "btn-subscribe": "Suscribirse"
-      },
-      ja: {
-        "site-title": "硯舟のブログ",
-        "nav-home": "ホーム",
-        "nav-about": "私たちについて",
-        "nav-contact": "お問い合わせ",
-        "nav-terms": "利用規約",
-        "user-name": "硯舟",
-        "site-intro": "美しい時間 / 美しい景色",
-        "section-iguazu": "イグアスの滝",
-        "iguazu-p1": "イグアスの滝はアルゼンチンとブラジルにまたがる世界最大級の滝群、世界的な自然遺産です。",
-        "iguazu-detail": "幅約2.7km、275の滝、「悪魔の喉元」は圧巻、世界遺産・新七大自然奇跡に選ばれる。",
-        "pic1-desc": "虹と激流：晴れた日は霧と熱帯雨林に虹がかかる",
-        "pic2-desc": "空撮：川が断崖から深い谷へ流れ込む雄大な景観",
-        "pic3-desc": "悪魔の喉元：半円の峡谷に滝が密集し水しぶきが舞う",
-        "pic4-desc": "光が霧を抜け、滝に鮮やかな虹がかかる",
-        "pic5-desc": "アルゼンチン側遊歩道：間近に水しぶきを感じる",
-        "pic6-desc": "ブラジル側：滝全体が一望できる全景",
-        "pic7-desc": "熱帯雨林と青い水、自然と水が一体となる",
-        "pic8-desc": "夕暮れ：沈む夕日に包まれ穏やかな美しさ",
-        "section-location": "場所と検索",
-        "btn-iguazu": "🔍 イグアス詳細",
-        "btn-arg": "🌎 アルゼンチン観光",
-        "btn-travel": "✈️ 南米旅行ガイド",
-        "btn-waterfall": "💧 世界の滝",
-        "btn-map": "🗺️ 地図でイグアス",
-        "section-recommend": "おすすめリンク",
-        "link-articles": "📝 記事一覧",
-        "link-learn": "💻 学習リソース",
-        "link-tools": "📌 便利サイト",
-        "link-email": "✉️ 連絡先：gao52068@gmail.com",
-        "footer-contact-title": "連絡先",
-        "footer-social": "SNS",
-        "footer-subscribe": "ニュースレター登録",
-        "btn-subscribe": "登録"
-      },
-      fr: {
-        "site-title": "Blog de Yanzhou",
-        "nav-home": "Accueil",
-        "nav-about": "À propos",
-        "nav-contact": "Contact",
-        "nav-terms": "Conditions générales",
-        "user-name": "Yanzhou",
-        "site-intro": "Beaux moments / Beaux paysages",
-        "section-iguazu": "Chutes d'Iguazú",
-        "iguazu-p1": "Les chutes d'Iguazú, plus grand ensemble de cascades du monde entre Argentine et Brésil, merveille naturelle.",
-        "iguazu-detail": "2,7 km de large, 275 cascades ; la Gorge du Diable spectaculaire ; patrimoine mondial et une des 7 merveilles naturelles.",
-        "pic1-desc": "Arc-en-ciel et torrent : arc-en-ciel sur la brume et la forêt tropicale",
-        "pic2-desc": "Vue aérienne : fleuve qui plonge dans de profondes vallées",
-        "pic3-desc": "Gorge du Diable : cascades puissantes dans un canyon en fer à cheval",
-        "pic4-desc": "Lumière à travers la brume, arc-en-ciel sur les chutes",
-        "pic5-desc": "Sentiers argentins : sentir l'eau de près",
-        "pic6-desc": "Côté brésilien : vue panoramique complète",
-        "pic7-desc": "Forêt, eau claire et ciel bleu : nature et eau unies",
-        "pic8-desc": "Crépuscule : beauté calme au coucher du soleil",
-        "section-location": "Localisation & Recherche",
-        "btn-iguazu": "🔍 Détails Iguazú",
-        "btn-arg": "🌎 Argentine tourisme",
-        "btn-travel": "✈️ Guide Amérique du Sud",
-        "btn-waterfall": "💧 Cascades du monde",
-        "btn-map": "🗺️ Carte Iguazú",
-        "section-recommend": "Recommandations & Liens",
-        "link-articles": "📝 Mes articles",
-        "link-learn": "💻 Ressources d'apprentissage",
-        "link-tools": "📌 Sites utiles",
-        "link-email": "✉️ Écrivez-moi : gao52068@gmail.com",
-        "footer-contact-title": "Contact",
-        "footer-social": "Réseaux sociaux",
-        "footer-subscribe": "S'abonner à la lettre",
-        "btn-subscribe": "S'abonner"
-      },
-      de: {
-        "site-title": "Yanzhous Blog",
-        "nav-home": "Startseite",
-        "nav-about": "Über uns",
-        "nav-contact": "Kontakt",
-        "nav-terms": "Nutzungsbedingungen",
-        "user-name": "Yanzhou",
-        "site-intro": "Schöne Momente / Schöne Landschaften",
-        "section-iguazu": "Iguazú-Wasserfälle",
-        "iguazu-p1": "Die Iguazú-Fälle, weltweit breiteste Wasserfallgruppe zwischen Argentinien und Brasilien, Naturwunder.",
-        "iguazu-detail": "2,7 km breit, 275 Fälle; Teufelsschlund beeindruckend; Welterbe & eines der neuen 7 Naturwunder.",
-        "pic1-desc": "Regenbogen & Strömung: Regenbogen über Nebel & Regenwald",
-        "pic2-desc": "Luftbild: Fluss stürzt in tiefe Täler",
-        "pic3-desc": "Teufelsschlund: dichte Wasserfälle im hufeisenförmigen Canyon",
-        "pic4-desc": "Sonne durch Nebel, bunter Regenbogen über den Fällen",
-        "pic5-desc": "Argentinien-Wege: Spritzendes Wasser nah erleben",
-        "pic6-desc": "Brasilien-Seite: Panoramablick auf alle Fälle",
-        "pic7-desc": "Regenwald, klares Wasser & blauer Himmel vereint",
-        "pic8-desc": "Dämmerung: sanfte Schönheit bei Sonnenuntergang",
-        "section-location": "Ort & Suche",
-        "btn-iguazu": "🔍 Iguazú Details",
-        "btn-arg": "🌎 Argentinien Sehenswürdigkeiten",
-        "btn-travel": "✈️ Südamerika-Reiseführer",
-        "btn-waterfall": "💧 Welt-Wasserfälle",
-        "btn-map": "🗺️ Karte Iguazú",
-        "section-recommend": "Empfehlungen & Links",
-        "link-articles": "📝 Meine Artikel",
-        "link-learn": "💻 Lernressourcen",
-        "link-tools": "📌 Nützliche Seiten",
-        "link-email": "✉️ Kontakt: gao52068@gmail.com",
-        "footer-contact-title": "Kontakt",
-        "footer-social": "Soziale Medien",
-        "footer-subscribe": "Newsletter abonnieren",
-        "btn-subscribe": "Abonnieren"
-      },
-      ru: {
-        "site-title": "Блог Яньчжоу",
-        "nav-home": "Главная",
-        "nav-about": "О нас",
-        "nav-contact": "Контакты",
-        "nav-terms": "Условия использования",
-        "user-name": "Яньчжоу",
-        "site-intro": "Прекрасные моменты / Красивые виды",
-        "section-iguazu": "Водопады Игуасу",
-        "iguazu-p1": "Игуасу — широчайшие водопады мира на границе Аргентины и Бразилии, чудо природы.",
-        "iguazu-detail": "Ширина 2,7 км, 275 потоков; Горло Дьявола впечатляет; объект наследия и одно из новых 7 чудес природы.",
-        "pic1-desc": "Радуга и поток: радуга над туманом и джунглями в солнечный день",
-        "pic2-desc": "С высоты: река обрывается в глубокие долины",
-        "pic3-desc": "Горло Дьявола: плотные каскады в подковообразном каньоне",
-        "pic4-desc": "Сквозь туман — яркая радуга над водопадами",
-        "pic5-desc": "Тропы Аргентины: брызги воды рядом",
-        "pic6-desc": "Бразилия: панорама всего комплекса",
-        "pic7-desc": "Джунгли, чистая вода и небо — природа и вода вместе",
-        "pic8-desc": "Сумерки: тихая красота на закате",
-        "section-location": "Местоположение & Поиск",
-        "btn-iguazu": "🔍 Детали Игуасу",
-        "btn-arg": "🌎 Достопримечательности Аргентины",
-        "btn-travel": "✈️ Путеводитель по Южной Америке",
-        "btn-waterfall": "💧 Водопады мира",
-        "btn-map": "🗺️ Карта Игуасу",
-        "section-recommend": "Рекомендации & Ссылки",
-        "link-articles": "📝 Мои статьи",
-        "link-learn": "💻 Обучающие материалы",
-        "link-tools": "📌 Полезные сайты",
-        "link-email": "✉️ Написать: gao52068@gmail.com",
-        "footer-contact-title": "Связь",
-        "footer-social": "Соцсети",
-        "footer-subscribe": "Подписаться на рассылку",
-        "btn-subscribe": "Подписаться"
-      },
-      ar: {
-        "site-title": "مدونة يانزهو",
-        "nav-home": "الرئيسية",
-        "nav-about": "من نحن",
-        "nav-contact": "اتصل بنا",
-        "nav-terms": "الشروط والأحكام",
-        "user-name": "يانزهو",
-        "site-intro": "لحظات جميلة / مناظر خلابة",
-        "section-iguazu": "شلالات إيغواسو",
-        "iguazu-p1": "شلالات إيغواسو الأوسع عالمياً بين الأرجنتين والبرازيل، معجزة طبيعية.",
-        "iguazu-detail": "عرض 2.7 كم، 275 شلال؛ «حلق الشيطان» مهيب؛ تراث عالمي وأحد عجائب الطبيعة السبع الجديدة.",
-        "pic1-desc": "قوس قزح فوق الضباب والغابة في الأيام المشمسة",
-        "pic2-desc": "من الأعلى: نهر يندفع في وديان عميقة",
-        "pic3-desc": "حلق الشيطان: شلالات كثيفة في وادٍ على شكل حدوة حصان",
-        "pic4-desc": "ضوء الشمس يخترق الضباب ويظهر قوس قزح زاهٍ",
-        "pic5-desc": "مسارات الأرجنتين: تشعر برذاذ الماء عن قرب",
-        "pic6-desc": "الجانب البرازيلي: منظر شامل للشلالات",
-        "pic7-desc": "غابة، ماء صافٍ وسماء صافية تُكمل الجمال الطبيعي",
-        "pic8-desc": "الغروب: جمال هادئ مع ضوء الشمس الأخير",
-        "section-location": "الموقع والبحث",
-        "btn-iguazu": "🔍 تفاصيل إيغواسو",
-        "btn-arg": "🌎 معالم الأرجنتين",
-        "btn-travel": "✈️ دليل أمريكا الجنوبية",
-        "btn-waterfall": "💧 شلالات العالم",
-        "btn-map": "🗺️ خريطة إيغواسو",
-        "section-recommend": "توصيات وروابط",
-        "link-articles": "📝 مقالاتي",
-        "link-learn": "💻 مصادر تعليمية",
-        "link-tools": "📌 مواقع مفيدة",
-        "link-email": "✉️ تواصل: gao52068@gmail.com",
-        "footer-contact-title": "التواصل",
-        "footer-social": "وسائل التواصل",
-        "footer-subscribe": "اشترك بالنشرة",
-        "btn-subscribe": "اشترك"
-      },
-      pt: {
-        "site-title": "Blog do Yanzhou",
-        "nav-home": "Início",
-        "nav-about": "Sobre Nós",
-        "nav-contact": "Contato",
-        "nav-terms": "Termos e Condições",
-        "user-name": "Yanzhou",
-        "site-intro": "Momentos bonitos / Paisagens belas",
-        "section-iguazu": "Cataratas do Iguaçu",
-        "iguazu-p1": "As Cataratas do Iguaçu são o maior conjunto de quedas do mundo, entre Brasil e Argentina, maravilha natural.",
-        "iguazu-detail": "Largura de 2,7 km, 275 quedas; Garganta do Diabo impressionante; Patrimônio Mundial e uma das 7 Maravilhas da Natureza.",
-        "pic1-desc": "Arco-íris e corredeiras: sobre névoa e floresta em dias ensolarados",
-        "pic2-desc": "Vista aérea: rio que despenca em vales profundos",
-        "pic3-desc": "Garganta do Diabo: quedas fortes em cânion em forma de ferradura",
-        "pic4-desc": "Luz atravessa névoa, arco-íris brilhante sobre as quedas",
-        "pic5-desc": "Trilhas argentinas: sentir respingos de água perto",
-        "pic6-desc": "Lado brasileiro: vista panorâmica de todo o conjunto",
-        "pic7-desc": "Floresta, água clara e céu azul unem natureza e água",
-        "pic8-desc": "Anoitecer: beleza calma ao entardecer",
-        "section-location": "Localização e Busca",
-        "btn-iguazu": "🔍 Detalhes Iguaçu",
-        "btn-arg": "🌎 Pontos turísticos da Argentina",
-        "btn-travel": "✈️ Guia América do Sul",
-        "btn-waterfall": "💧 Cachoeiras do mundo",
-        "btn-map": "🗺️ Mapa Iguaçu",
-        "section-re
+  var cartCount = 0;
+
+  // 格式化价格
+  function formatPrice(price) {
+    return '$' + price.toLocaleString('es-AR');
+  }
+
+  // 生成商品卡片
+  function createProductCard(product) {
+    var discountBadge = product.discount 
+      ? '<div style="position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;">-' + product.discount + '%</div>'
+      : '';
+    
+    var tagBadge = product.tag
+      ? '<div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,.95);color:var(--text);font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;backdrop-filter:blur(4px);">' + product.tag + '</div>'
+      : '';
+
+    var originalPrice = product.originalPrice
+      ? '<span style="font-size:13px;color:var(--muted);text-decoration:line-through;margin-right:8px;">' + formatPrice(product.originalPrice) + '</span>'
+      : '';
+
+    return '<div class="product-card" data-category="' + product.category + '" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;">' +
+      '<div style="position:relative;aspect-ratio:1;overflow:hidden;background:#f5f5f5;">' +
+        '<img src="' + product.image + '" alt="' + product.name + '" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease;" onerror="this.style.display=\'none\'" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'">' +
+        discountBadge +
+        tagBadge +
+        '<button class="fav-btn" data-id="' + product.id + '" style="position:absolute;bottom:12px;right:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.95);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);backdrop-filter:blur(4px);" onmouseover="this.style.color=\'var(--accent)\'" onmouseout="if(!this.classList.contains(\'favorited\'))this.style.color=\'var(--muted)\'">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
+        '</button>' +
+      '</div>' +
+      '<div style="padding:16px;">' +
+        '<h4 style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:4px;line-height:1.3;">' + product.name + '</h4>' +
+        '<p style="font-size:12px;color:var(--muted);margin-bottom:12px;">' + product.weight + '</p>' +
+        '<div style="display:flex;align-items:baseline;margin-bottom:14px;flex-wrap:wrap;">' +
+          originalPrice +
+          '<span style="font-size:20px;font-weight:700;color:var(--accent);">' + formatPrice(product.price) + '</span>' +
+        '</div>' +
+        '<button class="add-cart-btn" data-id="' + product.id + '" style="width:100%;padding:10px;border-radius:10px;background:var(--accent-soft);color:var(--text);font-weight:600;font-size:13px;border:1px solid var(--accent);cursor:pointer;font-family:inherit;transition:all .2s ease;" onmouseover="this.style.background=\'var(--accent)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--accent-soft)\';this.style.color=\'var(--text)\'">' +
+          '<span style="display:flex;align-items:center;justify-content:center;gap:6px;">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>' +
+            'Agregar al carrito' +
+          '</span>' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // 渲染所有商品
+  function renderProducts(category) {
+    var grid = document.getElementById('productsGrid');
+    var filtered = category === 'all' 
+      ? products 
+      : products.filter(function(p) { return p.category === category; });
+    
+    grid.innerHTML = filtered.map(createProductCard).join('');
+    
+    // 绑定添加购物车事件
+    grid.querySelectorAll('.add-cart-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        cartCount++;
+        var badge = document.getElementById('cartCount');
+        badge.textContent = cartCount;
+        badge.classList.remove('cart-badge');
+        void badge.offsetWidth;
+        badge.classList.add('cart-badge');
+        
+        // 按钮反馈
+        btn.style.background = 'var(--accent2)';
+        btn.style.borderColor = 'var(--accent2)';
+        btn.style.color = '#fff';
+        btn.querySelector('span').innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> ¡Agregado!';
+        setTimeout(function() {
+          btn.style.background = '';
+          btn.style.borderColor = '';
+          btn.style.color = '';
+          btn.querySelector('span').innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg> Agregar al carrito';
+        }, 1200);
+      });
+    });
+
+    // 绑定收藏按钮事件
+    grid.querySelectorAll('.fav-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (this.classList.contains('favorited')) {
+          this.classList.remove('favorited');
+          this.style.color = 'var(--muted)';
+          this.querySelector('svg').setAttribute('fill', 'none');
+        } else {
+          this.classList.add('favorited');
+          this.style.color = 'var(--accent)';
+          this.querySelector('svg').setAttribute('fill', 'currentColor');
+        }
+      });
+    });
+  }
+
+  // 分类筛选
+  document.querySelectorAll('.category-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.category-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      renderProducts(this.dataset.category);
+    });
+  });
+
+  // 初始渲染
+  renderProducts('all');
+})();
+</script>
+</html>
