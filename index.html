@@ -1,590 +1,1180 @@
 <html style="margin:0;padding:0;">
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700\&display=swap" rel="stylesheet">
+
 <script src="https://cdn.tailwindcss.com"></script>
+
 <script>
+
 (function(){
-  var s = document.createElement('style');
-  s.textContent = ':root{--bg:#fefcf8;--card:#ffffff;--text:#0f172a;--muted:#64748b;--accent:#ea580c;--accent-soft:rgba(234,88,12,.14);--accent2:#16a34a;--accent2-soft:rgba(22,163,74,.14);--border:rgba(15,23,42,.07)}.reveal{opacity:0;transform:translateY(20px);animation:fadeUp .6s ease forwards}.reveal:nth-child(2){animation-delay:.1s}.reveal:nth-child(3){animation-delay:.2s}.reveal:nth-child(4){animation-delay:.3s}.reveal:nth-child(5){animation-delay:.4s}.reveal:nth-child(6){animation-delay:.5s}@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}.product-card{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.product-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.1);border-color:var(--accent)}.category-btn{transition:all .2s ease}.category-btn:hover,.category-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.cart-badge{animation:pulse .3s ease}@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}.hero-gradient{background:linear-gradient(135deg,rgba(234,88,12,.08),rgba(22,163,74,.06))}';
-  document.head.appendChild(s);
+
+&#x20; var s = document.createElement('style');
+
+&#x20; s.textContent = ':root{--bg:#fefcf8;--card:#ffffff;--text:#0f172a;--muted:#64748b;--accent:#ea580c;--accent-soft:rgba(234,88,12,.14);--accent2:#16a34a;--accent2-soft:rgba(22,163,74,.14);--border:rgba(15,23,42,.07)}.reveal{opacity:0;transform:translateY(20px);animation:fadeUp .6s ease forwards}.reveal:nth-child(2){animation-delay:.1s}.reveal:nth-child(3){animation-delay:.2s}.reveal:nth-child(4){animation-delay:.3s}.reveal:nth-child(5){animation-delay:.4s}.reveal:nth-child(6){animation-delay:.5s}@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}.product-card{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.product-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.1);border-color:var(--accent)}.category-btn{transition:all .2s ease}.category-btn:hover,.category-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.cart-badge{animation:pulse .3s ease}@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}.hero-gradient{background:linear-gradient(135deg,rgba(234,88,12,.08),rgba(22,163,74,.06))}';
+
+&#x20; document.head.appendChild(s);
+
 })();
+
 </script>
+
 <div style="background-color:transparent;box-sizing:border-box;">
-  <div style="color:var(--text);font-family:'Quicksand',sans-serif;background:var(--bg);min-height:100%;">
-    
-    <!-- 顶部导航栏 -->
 
-    <header class="sticky top-0 z-50" style="background:rgba(254,252,248,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
-          <!-- Logo -->
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:42px;height:42px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
-                <path d="M3 6h18"/>
-                <path d="M16 10a4 4 0 0 1-8 0"/>
-              </svg>
-            </div>
-            <div>
-              <h1 style="font-size:22px;font-weight:700;color:var(--text);line-height:1;">Sabores</h1>
-              <p style="font-size:11px;color:var(--muted);letter-spacing:.05em;">ALIMENTOS FRESCOS</p>
-            </div>
-          </div>
-          
-          <!-- 搜索框 -->
-          <div style="flex:1;min-width:200px;max-width:480px;position:relative;">
-            <div style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"/>
-                <path d="m21 21-4.3-4.3"/>
-              </svg>
-            </div>
-            <input type="text" placeholder="Buscar productos..." style="width:100%;padding:12px 16px 12px 42px;border-radius:12px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;color:var(--text);outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
-          </div>
-          
-          <!-- 右侧图标 -->
-          <div style="display:flex;align-items:center;gap:8px;">
-            <button style="width:42px;height:42px;border-radius:10px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-              </svg>
-            </button>
-            <button id="cartBtn" style="width:42px;height:42px;border-radius:10px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);position:relative;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="8" cy="21" r="1"/>
-                <circle cx="19" cy="21" r="1"/>
-                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
-              </svg>
-              <span id="cartCount" style="position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--accent);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">0</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
+&#x20; <div style="color:var(--text);font-family:'Quicksand',sans-serif;background:var(--bg);min-height:100%;">
 
-    <!-- 468x60 横幅广告 -->
-    <div style="display:flex;justify-content:center;padding:16px 0;background:var(--bg);border-bottom:1px solid var(--border);">
-      <div style="width:468px;height:60px;overflow:hidden;">
-        <script>
-          atOptions = {
-            'key' : 'd14ad31294c6e3821f6c635d9eb5e808',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-          };
-        </script>
-        <script src="https://www.highrevenueformat.com/d14ad31294c6e3821f6c635d9eb5e808/invoke.js"></script>
-      </div>
-    </div>
+&#x20;   
 
-    <!-- Hero 区域 -->
-    <section class="hero-gradient reveal" style="padding:48px 0 32px;">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div style="display:grid;grid-template-columns:1fr;gap:32px;align-items:center;" class="lg:grid-cols-2">
-          <div>
-            <p style="font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px;">Bienvenido a Sabores</p>
-            <h2 style="font-size:clamp(28px,4vw,48px);font-weight:700;line-height:1.15;color:var(--text);margin-bottom:16px;">
-              Los mejores <span style="background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;">alimentos frescos</span> directamente a tu puerta
-            </h2>
-            <p style="font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:500px;">
-              Descubre nuestra selección de productos frescos, desde panes artesanales hasta carnes premium. Calidad garantizada y precios increíbles.
-            </p>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;">
-              <button style="padding:14px 28px;border-radius:12px;background:var(--accent);color:#fff;font-weight:600;font-size:15px;border:none;cursor:pointer;font-family:inherit;" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">
-                Ver productos
-              </button>
-              <button style="padding:14px 28px;border-radius:12px;background:var(--card);color:var(--text);font-weight:600;font-size:15px;border:1px solid var(--border);cursor:pointer;font-family:inherit;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)'">
-                Ofertas especiales
-              </button>
-            </div>
-            <div style="display:flex;gap:32px;margin-top:32px;flex-wrap:wrap;">
-              <div>
-                <p style="font-size:28px;font-weight:700;color:var(--text);">500+</p>
-                <p style="font-size:13px;color:var(--muted);">Productos frescos</p>
-              </div>
-              <div>
-                <p style="font-size:28px;font-weight:700;color:var(--text);">24h</p>
-                <p style="font-size:13px;color:var(--muted);">Entrega rápida</p>
-              </div>
-              <div>
-                <p style="font-size:28px;font-weight:700;color:var(--text);">100%</p>
-                <p style="font-size:13px;color:var(--muted);">Calidad garantizada</p>
-              </div>
-            </div>
-          </div>
-          <div style="position:relative;">
-            <div style="border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(234,88,12,.15);">
-              <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/eb90667fc89d4a3598188749af7f14fa.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789560&x-signature=926pZzNwjxywkv%2BW63tRHNTElMI%3D" alt="Panes frescos" style="width:100%;height:380px;object-fit:cover;display:block;" onerror="this.style.display='none'">
-            </div>
-            <div style="position:absolute;bottom:-16px;left:-16px;background:var(--card);padding:16px 20px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.1);border:1px solid var(--border);">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <div style="width:40px;height:40px;border-radius:10px;background:var(--accent2-soft);display:flex;align-items:center;justify-content:center;color:var(--accent2);">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 6 9 17l-5-5"/>
-                  </svg>
-                </div>
-                <div>
-                  <p style="font-weight:700;font-size:14px;color:var(--text);">Producto destacado</p>
-                  <p style="font-size:12px;color:var(--muted);">Panes recién horneados</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+&#x20;   <!-- 顶部导航栏 -->
 
-    <!-- 分类筛选 -->
-    <section class="reveal" style="padding:24px 0;">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;">
-          <button class="category-btn active" data-category="all" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
-            Todos
-          </button>
-          <button class="category-btn" data-category="panaderia" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
-            Panadería
-          </button>
-          <button class="category-btn" data-category="carnes" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
-            Carnes
-          </button>
-          <button class="category-btn" data-category="quesos" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
-            Quesos y Fiambres
-          </button>
-          <button class="category-btn" data-category="frutas" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
-            Frutas y Verduras
-          </button>
-          <button class="category-btn" data-category="pastas" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
-            Pastas
-          </button>
-          <button class="category-btn" data-category="mariscos" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
-            Mariscos
-          </button>
-          <button class="category-btn" data-category="postres" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
-            Postres
-          </button>
-          <button class="category-btn" data-category="saludable" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
-            Saludable
-          </button>
-        </div>
-      </div>
-    </section>
 
-    <!-- 商品展示区域 -->
-    <section class="reveal" style="padding:16px 0 64px;">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
-          <div>
-            <h3 style="font-size:24px;font-weight:700;color:var(--text);margin-bottom:4px;">Productos destacados</h3>
-            <p style="font-size:14px;color:var(--muted);">Selección de los más vendidos esta semana</p>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span style="font-size:13px;color:var(--muted);">Ordenar por:</span>
-            <select style="padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:13px;color:var(--text);cursor:pointer;outline:none;">
-              <option>Recomendados</option>
-              <option>Precio: menor a mayor</option>
-              <option>Precio: mayor a menor</option>
-              <option>Más vendidos</option>
-            </select>
-          </div>
-        </div>
 
-        <!-- 商品网格 -->
-        <div id="productsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;">
-          <!-- 商品卡片将通过JS动态生成 -->
-        </div>
-      </div>
-    </section>
+&#x20;   <header class="sticky top-0 z-50" style="background:rgba(254,252,248,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);">
 
-    <!-- NativeBanner 原生广告 -->
-    <section style="padding:32px 0;background:var(--bg);">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <p style="text-align:center;font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;">Publicidad</p>
-        <div style="display:flex;justify-content:center;">
-          <script async="async" data-cfasync="false" src="https://pl31423677.profitableratecpmnetwork.com/0cac643e73a3b092a1a23bd326624549/invoke.js"></script>
-          <div id="container-0cac643e73a3b092a1a23bd326624549"></div>
-        </div>
-      </div>
-    </section>
+&#x20;     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
 
-    <!-- 特色服务 -->
-    <section class="reveal" style="padding:48px 0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;">
-          <div style="text-align:center;padding:20px;">
-            <div style="width:56px;height:56px;border-radius:16px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);margin:0 auto 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="1" y="3" width="15" height="13"/>
-                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
-                <circle cx="5.5" cy="18.5" r="2.5"/>
-                <circle cx="18.5" cy="18.5" r="2.5"/>
-              </svg>
-            </div>
-            <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Envío rápido</h4>
-            <p style="font-size:13px;color:var(--muted);line-height:1.5;">Entrega en menos de 24 horas en toda la ciudad</p>
-          </div>
-          <div style="text-align:center;padding:20px;">
-            <div style="width:56px;height:56px;border-radius:16px;background:var(--accent2-soft);display:flex;align-items:center;justify-content:center;color:var(--accent2);margin:0 auto 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </div>
-            <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Calidad garantizada</h4>
-            <p style="font-size:13px;color:var(--muted);line-height:1.5;">Productos frescos y de la mejor calidad</p>
-          </div>
-          <div style="text-align:center;padding:20px;">
-            <div style="width:56px;height:56px;border-radius:16px;background:rgba(234,88,12,.1);display:flex;align-items:center;justify-content:center;color:var(--accent);margin:0 auto 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 6v6l4 2"/>
-              </svg>
-            </div>
-            <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Atención 24/7</h4>
-            <p style="font-size:13px;color:var(--muted);line-height:1.5;">Estamos aquí para ayudarte en cualquier momento</p>
-          </div>
-          <div style="text-align:center;padding:20px;">
-            <div style="width:56px;height:56px;border-radius:16px;background:rgba(22,163,74,.1);display:flex;align-items:center;justify-content:center;color:var(--accent2);margin:0 auto 14px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/>
-                <path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-                <path d="M5 7h14"/>
-              </svg>
-            </div>
-            <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Pagos seguros</h4>
-            <p style="font-size:13px;color:var(--muted);line-height:1.5;">Múltiples métodos de pago protegidos</p>
-          </div>
-        </div>
-      </div>
-    </section>
+&#x20;       <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
 
-    <!-- 页脚 -->
-    <footer style="padding:48px 0 24px;background:var(--bg);">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;margin-bottom:32px;">
-          <div>
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-              <div style="width:36px;height:36px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
-                  <path d="M3 6h18"/>
-                  <path d="M16 10a4 4 0 0 1-8 0"/>
-                </svg>
-              </div>
-              <span style="font-weight:700;font-size:18px;color:var(--text);">Sabores</span>
-            </div>
-            <p style="font-size:14px;color:var(--muted);line-height:1.6;">Tu tienda de alimentos de confianza. Calidad, frescura y el mejor sabor en cada producto.</p>
-          </div>
-          <div>
-            <h5 style="font-weight:700;font-size:15px;color:var(--text);margin-bottom:14px;">Categorías</h5>
-            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
-              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Panadería</a></li>
-              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Carnes</a></li>
-              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Frutas y Verduras</a></li>
-              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Quesos y Fiambres</a></li>
-            </ul>
-          </div>
-          <div>
-            <h5 style="font-weight:700;font-size:15px;color:var(--text);margin-bottom:14px;">Ayuda</h5>
-            <ul style="list-style:none;padding:0;margin;margin:0;display:flex;flex-direction:column;gap:8px;">
-              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Centro de ayuda</a></li>
-              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Envíos y devoluciones</a></li>
-              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Términos y condiciones</a></li>
-              <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Política de privacidad</a></li>
-            </ul>
-          </div>
-          <div>
-            <h5 style="font-weight:700;font-size:15px;color:var(--text);margin-bottom:14px;">Contacto</h5>
-            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
-              <li style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                +54 11 1234-5678
-              </li>
-              <li style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                hola@sabores.com.ar
-              </li>
-              <li style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Buenos Aires, Argentina
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div style="border-top:1px solid var(--border);padding-top:24px;text-align:center;">
-          <p style="font-size:13px;color:var(--muted);">© 2026 Sabores Alimentos. Todos los derechos reservados.</p>
-        </div>
-      </div>
-    </footer>
+&#x20;         <!-- Logo -->
 
-  </div>
+&#x20;         <div style="display:flex;align-items:center;gap:10px;">
+
+&#x20;           <div style="width:42px;height:42px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;">
+
+&#x20;             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+&#x20;               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+
+&#x20;               <path d="M3 6h18"/>
+
+&#x20;               <path d="M16 10a4 4 0 0 1-8 0"/>
+
+&#x20;             </svg>
+
+&#x20;           </div>
+
+&#x20;           <div>
+
+&#x20;             <h1 style="font-size:22px;font-weight:700;color:var(--text);line-height:1;">Sabores</h1>
+
+&#x20;             <p style="font-size:11px;color:var(--muted);letter-spacing:.05em;">ALIMENTOS FRESCOS</p>
+
+&#x20;           </div>
+
+&#x20;         </div>
+
+&#x20;         
+
+&#x20;         <!-- 搜索框 -->
+
+&#x20;         <div style="flex:1;min-width:200px;max-width:480px;position:relative;">
+
+&#x20;           <div style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);">
+
+&#x20;             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+&#x20;               <circle cx="11" cy="11" r="8"/>
+
+&#x20;               <path d="m21 21-4.3-4.3"/>
+
+&#x20;             </svg>
+
+&#x20;           </div>
+
+&#x20;           <input type="text" placeholder="Buscar productos..." style="width:100%;padding:12px 16px 12px 42px;border-radius:12px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;color:var(--text);outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+
+&#x20;         </div>
+
+&#x20;         
+
+&#x20;         <!-- 右侧图标 -->
+
+&#x20;         <div style="display:flex;align-items:center;gap:8px;">
+
+&#x20;           <button style="width:42px;height:42px;border-radius:10px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">
+
+&#x20;             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+&#x20;               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+
+&#x20;             </svg>
+
+&#x20;           </button>
+
+&#x20;           <button id="cartBtn" style="width:42px;height:42px;border-radius:10px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);position:relative;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">
+
+&#x20;             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+&#x20;               <circle cx="8" cy="21" r="1"/>
+
+&#x20;               <circle cx="19" cy="21" r="1"/>
+
+&#x20;               <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+
+&#x20;             </svg>
+
+&#x20;             <span id="cartCount" style="position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--accent);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">0</span>
+
+&#x20;           </button>
+
+&#x20;         </div>
+
+&#x20;       </div>
+
+&#x20;     </div>
+
+&#x20;   </header>
+
+
+
+&#x20;   <!-- 468x60 横幅广告 -->
+
+&#x20;   <div style="display:flex;justify-content:center;padding:16px 0;background:var(--bg);border-bottom:1px solid var(--border);">
+
+&#x20;     <div style="width:468px;height:60px;overflow:hidden;">
+
+&#x20;       <script>
+
+&#x20;         atOptions = {
+
+&#x20;           'key' : 'd14ad31294c6e3821f6c635d9eb5e808',
+
+&#x20;           'format' : 'iframe',
+
+&#x20;           'height' : 60,
+
+&#x20;           'width' : 468,
+
+&#x20;           'params' : {}
+
+&#x20;         };
+
+&#x20;       </script>
+
+&#x20;       <script src="https://www.highrevenueformat.com/d14ad31294c6e3821f6c635d9eb5e808/invoke.js"></script>
+
+&#x20;     </div>
+
+&#x20;   </div>
+
+
+
+&#x20;   <!-- Hero 区域 -->
+
+&#x20;   <section class="hero-gradient reveal" style="padding:48px 0 32px;">
+
+&#x20;     <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+&#x20;       <div style="display:grid;grid-template-columns:1fr;gap:32px;align-items:center;" class="lg:grid-cols-2">
+
+&#x20;         <div>
+
+&#x20;           <p style="font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px;">Bienvenido a Sabores</p>
+
+&#x20;           <h2 style="font-size:clamp(28px,4vw,48px);font-weight:700;line-height:1.15;color:var(--text);margin-bottom:16px;">
+
+&#x20;             Los mejores <span style="background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;">alimentos frescos</span> directamente a tu puerta
+
+&#x20;           </h2>
+
+&#x20;           <p style="font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:500px;">
+
+&#x20;            [ Descubre](https://tiktikstream.com/v/DD5Ou_neVmX) [nuestra ](https://tiktikstream.com/v/23A0S1NUG8e)[selección](https://tiktikstream.com/v/74cMejkh27D) [de](https://tiktikstream.com/v/NUxyNJDTB35) [productos](https://tiktikstream.com/v/KF3SDPhzV76) [frescos](https://luluvdo.com/25gfrrw8rtk6), [desde](https://luluvdo.com/qs26ixp21nr2) [panes](https://luluvdo.com/nz7rxl4j0id1) [artesanales ](https://luluvdo.com/kmnbsl6p3uo7)[hasta](https://luluvdo.com/daw2b7dyeqtw) carnes premium. Calidad garantizada y precios increíbles.
+
+&#x20;           </p>
+
+&#x20;           <div style="display:flex;gap:12px;flex-wrap:wrap;">
+
+&#x20;             <button style="padding:14px 28px;border-radius:12px;background:var(--accent);color:#fff;font-weight:600;font-size:15px;border:none;cursor:pointer;font-family:inherit;" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">
+
+&#x20;               Ver productos
+
+&#x20;             </button>
+
+&#x20;             <button style="padding:14px 28px;border-radius:12px;background:var(--card);color:var(--text);font-weight:600;font-size:15px;border:1px solid var(--border);cursor:pointer;font-family:inherit;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)'">
+
+&#x20;               Ofertas especiales
+
+&#x20;             </button>
+
+&#x20;           </div>
+
+&#x20;           <div style="display:flex;gap:32px;margin-top:32px;flex-wrap:wrap;">
+
+&#x20;             <div>
+
+&#x20;               <p style="font-size:28px;font-weight:700;color:var(--text);">500+</p>
+
+&#x20;               <p style="font-size:13px;color:var(--muted);">Productos frescos</p>
+
+&#x20;             </div>
+
+&#x20;             <div>
+
+&#x20;               <p style="font-size:28px;font-weight:700;color:var(--text);">24h</p>
+
+&#x20;               <p style="font-size:13px;color:var(--muted);">Entrega rápida</p>
+
+&#x20;             </div>
+
+&#x20;             <div>
+
+&#x20;               <p style="font-size:28px;font-weight:700;color:var(--text);">100%</p>
+
+&#x20;               <p style="font-size:13px;color:var(--muted);">Calidad garantizada</p>
+
+&#x20;             </div>
+
+&#x20;           </div>
+
+&#x20;         </div>
+
+&#x20;         <div style="position:relative;">
+
+&#x20;           <div style="border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(234,88,12,.15);">
+
+&#x20;             <img src="https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/eb90667fc89d4a3598188749af7f14fa.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789560\&x-signature=926pZzNwjxywkv%2BW63tRHNTElMI%3D" alt="Panes frescos" style="width:100%;height:380px;object-fit:cover;display:block;" onerror="this.style.display='none'">
+
+&#x20;           </div>
+
+&#x20;           <div style="position:absolute;bottom:-16px;left:-16px;background:var(--card);padding:16px 20px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.1);border:1px solid var(--border);">
+
+&#x20;             <div style="display:flex;align-items:center;gap:10px;">
+
+&#x20;               <div style="width:40px;height:40px;border-radius:10px;background:var(--accent2-soft);display:flex;align-items:center;justify-content:center;color:var(--accent2);">
+
+&#x20;                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+&#x20;                   <path d="M20 6 9 17l-5-5"/>
+
+&#x20;                 </svg>
+
+&#x20;               </div>
+
+&#x20;               <div>
+
+&#x20;                 <p style="font-weight:700;font-size:14px;color:var(--text);">Producto destacado</p>
+
+&#x20;                 <p style="font-size:12px;color:var(--muted);">Panes recién horneados</p>
+
+&#x20;               </div>
+
+&#x20;             </div>
+
+&#x20;           </div>
+
+&#x20;         </div>
+
+&#x20;       </div>
+
+&#x20;     </div>
+
+&#x20;   </section>
+
+
+
+&#x20;   <!-- 分类筛选 -->
+
+&#x20;   <section class="reveal" style="padding:24px 0;">
+
+&#x20;     <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+&#x20;       <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;">
+
+&#x20;         <button class="category-btn active" data-category="all" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+
+&#x20;           Todos
+
+&#x20;         </button>
+
+&#x20;         <button class="category-btn" data-category="panaderia" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+
+&#x20;           Panadería
+
+&#x20;         </button>
+
+&#x20;         <button class="category-btn" data-category="carnes" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+
+&#x20;           Carnes
+
+&#x20;         </button>
+
+&#x20;         <button class="category-btn" data-category="quesos" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+
+&#x20;           Quesos y Fiambres
+
+&#x20;         </button>
+
+&#x20;         <button class="category-btn" data-category="frutas" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+
+&#x20;           Frutas y Verduras
+
+&#x20;         </button>
+
+&#x20;         <button class="category-btn" data-category="pastas" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+
+&#x20;           Pastas
+
+&#x20;         </button>
+
+&#x20;         <button class="category-btn" data-category="mariscos" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+
+&#x20;           Mariscos
+
+&#x20;         </button>
+
+&#x20;         <button class="category-btn" data-category="postres" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+
+&#x20;           Postres
+
+&#x20;         </button>
+
+&#x20;         <button class="category-btn" data-category="saludable" style="padding:10px 20px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted);">
+
+&#x20;           Saludable
+
+&#x20;         </button>
+
+&#x20;       </div>
+
+&#x20;     </div>
+
+&#x20;   </section>
+
+
+
+&#x20;   <!-- 商品展示区域 -->
+
+&#x20;   <section class="reveal" style="padding:16px 0 64px;">
+
+&#x20;     <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+&#x20;       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+
+&#x20;         <div>
+
+&#x20;           <h3 style="font-size:24px;font-weight:700;color:var(--text);margin-bottom:4px;">Productos destacados</h3>
+
+&#x20;           <p style="font-size:14px;color:var(--muted);">Selección de los más vendidos esta semana</p>
+
+&#x20;         </div>
+
+&#x20;         <div style="display:flex;align-items:center;gap:8px;">
+
+&#x20;           <span style="font-size:13px;color:var(--muted);">Ordenar por:</span>
+
+&#x20;           <select style="padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);font-family:inherit;font-size:13px;color:var(--text);cursor:pointer;outline:none;">
+
+&#x20;             <option>Recomendados</option>
+
+&#x20;             <option>Precio: menor a mayor</option>
+
+&#x20;             <option>Precio: mayor a menor</option>
+
+&#x20;             <option>Más vendidos</option>
+
+&#x20;           </select>
+
+&#x20;         </div>
+
+&#x20;       </div>
+
+
+
+&#x20;       <!-- 商品网格 -->
+
+&#x20;       <div id="productsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;">
+
+&#x20;         <!-- 商品卡片将通过JS动态生成 -->
+
+&#x20;       </div>
+
+&#x20;     </div>
+
+&#x20;   </section>
+
+
+
+&#x20;   <!-- NativeBanner 原生广告 -->
+
+&#x20;   <section style="padding:32px 0;background:var(--bg);">
+
+&#x20;     <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+&#x20;       <p style="text-align:center;font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;">Publicidad</p>
+
+&#x20;       <div style="display:flex;justify-content:center;">
+
+&#x20;         <script async="async" data-cfasync="false" src="https://pl31423677.profitableratecpmnetwork.com/0cac643e73a3b092a1a23bd326624549/invoke.js"></script>
+
+&#x20;         <div id="container-0cac643e73a3b092a1a23bd326624549"></div>
+
+&#x20;       </div>
+
+&#x20;     </div>
+
+&#x20;   </section>
+
+
+
+&#x20;   <!-- 特色服务 -->
+
+&#x20;   <section class="reveal" style="padding:48px 0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+
+&#x20;     <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+&#x20;       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;">
+
+&#x20;         <div style="text-align:center;padding:20px;">
+
+&#x20;           <div style="width:56px;height:56px;border-radius:16px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);margin:0 auto 14px;">
+
+&#x20;             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+&#x20;               <rect x="1" y="3" width="15" height="13"/>
+
+&#x20;               <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+
+&#x20;               <circle cx="5.5" cy="18.5" r="2.5"/>
+
+&#x20;               <circle cx="18.5" cy="18.5" r="2.5"/>
+
+&#x20;             </svg>
+
+&#x20;           </div>
+
+&#x20;           <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Envío rápido</h4>
+
+&#x20;           <p style="font-size:13px;color:var(--muted);line-height:1.5;">Entrega en menos de 24 horas en toda la ciudad</p>
+
+&#x20;         </div>
+
+&#x20;         <div style="text-align:center;padding:20px;">
+
+&#x20;           <div style="width:56px;height:56px;border-radius:16px;background:var(--accent2-soft);display:flex;align-items:center;justify-content:center;color:var(--accent2);margin:0 auto 14px;">
+
+&#x20;             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+&#x20;               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+
+&#x20;             </svg>
+
+&#x20;           </div>
+
+&#x20;           <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Calidad garantizada</h4>
+
+&#x20;           <p style="font-size:13px;color:var(--muted);line-height:1.5;">Productos frescos y de la mejor calidad</p>
+
+&#x20;         </div>
+
+&#x20;         <div style="text-align:center;padding:20px;">
+
+&#x20;           <div style="width:56px;height:56px;border-radius:16px;background:rgba(234,88,12,.1);display:flex;align-items:center;justify-content:center;color:var(--accent);margin:0 auto 14px;">
+
+&#x20;             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+&#x20;               <circle cx="12" cy="12" r="10"/>
+
+&#x20;               <path d="M12 6v6l4 2"/>
+
+&#x20;             </svg>
+
+&#x20;           </div>
+
+&#x20;           <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Atención 24/7</h4>
+
+&#x20;           <p style="font-size:13px;color:var(--muted);line-height:1.5;">Estamos aquí para ayudarte en cualquier momento</p>
+
+&#x20;         </div>
+
+&#x20;         <div style="text-align:center;padding:20px;">
+
+&#x20;           <div style="width:56px;height:56px;border-radius:16px;background:rgba(22,163,74,.1);display:flex;align-items:center;justify-content:center;color:var(--accent2);margin:0 auto 14px;">
+
+&#x20;             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+&#x20;               <path d="M19 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/>
+
+&#x20;               <path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+
+&#x20;               <path d="M5 7h14"/>
+
+&#x20;             </svg>
+
+&#x20;           </div>
+
+&#x20;           <h4 style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:6px;">Pagos seguros</h4>
+
+&#x20;           <p style="font-size:13px;color:var(--muted);line-height:1.5;">Múltiples métodos de pago protegidos</p>
+
+&#x20;         </div>
+
+&#x20;       </div>
+
+&#x20;     </div>
+
+&#x20;   </section>
+
+
+
+&#x20;   <!-- 页脚 -->
+
+&#x20;   <footer style="padding:48px 0 24px;background:var(--bg);">
+
+&#x20;     <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+&#x20;       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;margin-bottom:32px;">
+
+&#x20;         <div>
+
+&#x20;           <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+
+&#x20;             <div style="width:36px;height:36px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;">
+
+&#x20;               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+&#x20;                 <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+
+&#x20;                 <path d="M3 6h18"/>
+
+&#x20;                 <path d="M16 10a4 4 0 0 1-8 0"/>
+
+&#x20;               </svg>
+
+&#x20;             </div>
+
+&#x20;             <span style="font-weight:700;font-size:18px;color:var(--text);">Sabores</span>
+
+&#x20;           </div>
+
+&#x20;           <p style="font-size:14px;color:var(--muted);line-height:1.6;">Tu tienda de alimentos de confianza. Calidad, frescura y el mejor sabor en cada producto.</p>
+
+&#x20;         </div>
+
+&#x20;         <div>
+
+&#x20;           <h5 style="font-weight:700;font-size:15px;color:var(--text);margin-bottom:14px;">Categorías</h5>
+
+&#x20;           <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+
+&#x20;             <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Panadería</a></li>
+
+&#x20;             <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Carnes</a></li>
+
+&#x20;             <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Frutas y Verduras</a></li>
+
+&#x20;             <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Quesos y Fiambres</a></li>
+
+&#x20;           </ul>
+
+&#x20;         </div>
+
+&#x20;         <div>
+
+&#x20;           <h5 style="font-weight:700;font-size:15px;color:var(--text);margin-bottom:14px;">Ayuda</h5>
+
+&#x20;           <ul style="list-style:none;padding:0;margin;margin:0;display:flex;flex-direction:column;gap:8px;">
+
+&#x20;             <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Centro de ayuda</a></li>
+
+&#x20;             <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Envíos y devoluciones</a></li>
+
+&#x20;             <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Términos y condiciones</a></li>
+
+&#x20;             <li><a href="#" style="font-size:14px;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Política de privacidad</a></li>
+
+&#x20;           </ul>
+
+&#x20;         </div>
+
+&#x20;         <div>
+
+&#x20;           <h5 style="font-weight:700;font-size:15px;color:var(--text);margin-bottom:14px;">Contacto</h5>
+
+&#x20;           <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+
+&#x20;             <li style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px;">
+
+&#x20;               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+
+&#x20;               +54 11 1234-5678
+
+&#x20;             </li>
+
+&#x20;             <li style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px;">
+
+&#x20;               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+
+&#x20;               hola@sabores.com.ar
+
+&#x20;             </li>
+
+&#x20;             <li style="font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px;">
+
+&#x20;               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+
+&#x20;               Buenos Aires, Argentina
+
+&#x20;             </li>
+
+&#x20;           </ul>
+
+&#x20;         </div>
+
+&#x20;       </div>
+
+&#x20;       <div style="border-top:1px solid var(--border);padding-top:24px;text-align:center;">
+
+&#x20;         <p style="font-size:13px;color:var(--muted);">© 2026 Sabores Alimentos. Todos los derechos reservados.</p>
+
+&#x20;       </div>
+
+&#x20;     </div>
+
+&#x20;   </footer>
+
+
+
+&#x20; </div>
+
 </div>
 
+
+
 <script>
+
 (function(){
-  // 商品数据
-  var products = [
-    {
-      id: 1,
-      name: "Croissants de Mantequilla",
-      category: "panaderia",
-      weight: "200g",
-      price: 2890,
-      originalPrice: 3600,
-      discount: 20,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/eb90667fc89d4a3598188749af7f14fa.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789560&x-signature=926pZzNwjxywkv%2BW63tRHNTElMI%3D",
-      tag: "Popular"
-    },
-    {
-      id: 2,
-      name: "Tabla de Quesos y Fiambres",
-      category: "quesos",
-      weight: "500g",
-      price: 8900,
-      originalPrice: null,
-      discount: null,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/e8766f7e1850489e9ebaaf3078781014.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789562&x-signature=iRYIRz8WGMYeViBPvQYBVPqyjqE%3D",
-      tag: "Premium"
-    },
-    {
-      id: 3,
-      name: "Cesta de Frutas y Verduras",
-      category: "frutas",
-      weight: "3kg",
-      price: 4500,
-      originalPrice: 5800,
-      discount: 22,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/2096b217ced74474a5faabb36dfadcdc.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789561&x-signature=8t1v9hYomTRhRWf9GjcT11Yu%2BZ8%3D",
-      tag: "Oferta"
-    },
-    {
-      id: 4,
-      name: "Asado Argentino Premium",
-      category: "carnes",
-      weight: "1.2kg",
-      price: 12800,
-      originalPrice: null,
-      discount: null,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/033e8290974e4b349558903c70588904.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789563&x-signature=s5oliUsIEhhhnEP4a%2BKCW9QCLdU%3D",
-      tag: "Destacado"
-    },
-    {
-      id: 5,
-      name: "Fusilli con Salsa Pomodoro",
-      category: "pastas",
-      weight: "400g",
-      price: 1890,
-      originalPrice: 2400,
-      discount: 21,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/41a0051e84404c7280b4be5b40f98a9f.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789581&x-signature=hJMwu14cn7UHOLl2po%2F5ab%2F8KFo%3D",
-      tag: "Nuevo"
-    },
-    {
-      id: 6,
-      name: "Cocktail de Mariscos Frescos",
-      category: "mariscos",
-      weight: "600g",
-      price: 9600,
-      originalPrice: null,
-      discount: null,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/3677516cb2f04977aef52c802ca0a773.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789584&x-signature=6DE2gzxRP12QR6%2BHk5Z8IzfCryQ%3D",
-      tag: "Premium"
-    },
-    {
-      id: 7,
-      name: "Selección de Chocolates",
-      category: "postres",
-      weight: "350g",
-      price: 5200,
-      originalPrice: 6500,
-      discount: 20,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/0555f9950c434977b6573fb9ab3419dd.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789583&x-signature=EdzGReSyGcJDrck9lW4i%2B7weneg%3D",
-      tag: "Ideal para regalar"
-    },
-    {
-      id: 8,
-      name: "Ensalada Saludable Premium",
-      category: "saludable",
-      weight: "380g",
-      price: 2100,
-      originalPrice: null,
-      discount: null,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/062c21b56a3f4798afc33165b6f83dbe.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789580&x-signature=LnV2qWxmlEm7Mggga2tn0TYocS4%3D",
-      tag: "Saludable"
-    },
-    {
-      id: 9,
-      name: "Pan de Campo Artesanal",
-      category: "panaderia",
-      weight: "500g",
-      price: 1650,
-      originalPrice: null,
-      discount: null,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/eb90667fc89d4a3598188749af7f14fa.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789560&x-signature=926pZzNwjxywkv%2BW63tRHNTElMI%3D",
-      tag: "Artesanal"
-    },
-    {
-      id: 10,
-      name: "Queso Parmesano DOP",
-      category: "quesos",
-      weight: "300g",
-      price: 4800,
-      originalPrice: 5600,
-      discount: 14,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/e8766f7e1850489e9ebaaf3078781014.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789562&x-signature=iRYIRz8WGMYeViBPvQYBVPqyjqE%3D",
-      tag: "Importado"
-    },
-    {
-      id: 11,
-      name: "Corte de Carne Premium",
-      category: "carnes",
-      weight: "800g",
-      price: 7800,
-      originalPrice: null,
-      discount: null,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/033e8290974e4b349558903c70588904.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789563&x-signature=s5oliUsIEhhhnEP4a%2BKCW9QCLdU%3D",
-      tag: "Ternera"
-    },
-    {
-      id: 12,
-      name: "Frutas Tropicales Mix",
-      category: "frutas",
-      weight: "1.5kg",
-      price: 3200,
-      originalPrice: 4000,
-      discount: 20,
-      image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc_gen_image/2096b217ced74474a5faabb36dfadcdc.jpeg~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184&rk3s=8e244e95&rrcfp=02a80fc2&x-expires=1789789561&x-signature=8t1v9hYomTRhRWf9GjcT11Yu%2BZ8%3D",
-      tag: "Fresco"
-    }
-  ];
 
-  var cartCount = 0;
+&#x20; // 商品数据
 
-  // 格式化价格
-  function formatPrice(price) {
-    return '$' + price.toLocaleString('es-AR');
-  }
+&#x20; var products = \[
 
-  // 生成商品卡片
-  function createProductCard(product) {
-    var discountBadge = product.discount 
-      ? '<div style="position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;">-' + product.discount + '%</div>'
-      : '';
-    
-    var tagBadge = product.tag
-      ? '<div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,.95);color:var(--text);font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;backdrop-filter:blur(4px);">' + product.tag + '</div>'
-      : '';
+&#x20;   {
 
-    var originalPrice = product.originalPrice
-      ? '<span style="font-size:13px;color:var(--muted);text-decoration:line-through;margin-right:8px;">' + formatPrice(product.originalPrice) + '</span>'
-      : '';
+&#x20;     id: 1,
 
-    return '<div class="product-card" data-category="' + product.category + '" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;">' +
-      '<div style="position:relative;aspect-ratio:1;overflow:hidden;background:#f5f5f5;">' +
-        '<img src="' + product.image + '" alt="' + product.name + '" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease;" onerror="this.style.display=\'none\'" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'">' +
-        discountBadge +
-        tagBadge +
-        '<button class="fav-btn" data-id="' + product.id + '" style="position:absolute;bottom:12px;right:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.95);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);backdrop-filter:blur(4px);" onmouseover="this.style.color=\'var(--accent)\'" onmouseout="if(!this.classList.contains(\'favorited\'))this.style.color=\'var(--muted)\'">' +
-          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
-        '</button>' +
-      '</div>' +
-      '<div style="padding:16px;">' +
-        '<h4 style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:4px;line-height:1.3;">' + product.name + '</h4>' +
-        '<p style="font-size:12px;color:var(--muted);margin-bottom:12px;">' + product.weight + '</p>' +
-        '<div style="display:flex;align-items:baseline;margin-bottom:14px;flex-wrap:wrap;">' +
-          originalPrice +
-          '<span style="font-size:20px;font-weight:700;color:var(--accent);">' + formatPrice(product.price) + '</span>' +
-        '</div>' +
-        '<button class="add-cart-btn" data-id="' + product.id + '" style="width:100%;padding:10px;border-radius:10px;background:var(--accent-soft);color:var(--text);font-weight:600;font-size:13px;border:1px solid var(--accent);cursor:pointer;font-family:inherit;transition:all .2s ease;" onmouseover="this.style.background=\'var(--accent)\';this.style.color=\'#fff\'" onmouseout="this.style.background=\'var(--accent-soft)\';this.style.color=\'var(--text)\'">' +
-          '<span style="display:flex;align-items:center;justify-content:center;gap:6px;">' +
-            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>' +
-            'Agregar al carrito' +
-          '</span>' +
-        '</button>' +
-      '</div>' +
-    '</div>';
-  }
+&#x20;     name: "Croissants de Mantequilla",
 
-  // 渲染所有商品
-  function renderProducts(category) {
-    var grid = document.getElementById('productsGrid');
-    var filtered = category === 'all' 
-      ? products 
-      : products.filter(function(p) { return p.category === category; });
-    
-    grid.innerHTML = filtered.map(createProductCard).join('');
-    
-    // 绑定添加购物车事件
-    grid.querySelectorAll('.add-cart-btn').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        cartCount++;
-        var badge = document.getElementById('cartCount');
-        badge.textContent = cartCount;
-        badge.classList.remove('cart-badge');
-        void badge.offsetWidth;
-        badge.classList.add('cart-badge');
-        
-        // 按钮反馈
-        btn.style.background = 'var(--accent2)';
-        btn.style.borderColor = 'var(--accent2)';
-        btn.style.color = '#fff';
-        btn.querySelector('span').innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> ¡Agregado!';
-        setTimeout(function() {
-          btn.style.background = '';
-          btn.style.borderColor = '';
-          btn.style.color = '';
-          btn.querySelector('span').innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg> Agregar al carrito';
-        }, 1200);
-      });
-    });
+&#x20;     category: "panaderia",
 
-    // 绑定收藏按钮事件
-    grid.querySelectorAll('.fav-btn').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (this.classList.contains('favorited')) {
-          this.classList.remove('favorited');
-          this.style.color = 'var(--muted)';
-          this.querySelector('svg').setAttribute('fill', 'none');
-        } else {
-          this.classList.add('favorited');
-          this.style.color = 'var(--accent)';
-          this.querySelector('svg').setAttribute('fill', 'currentColor');
-        }
-      });
-    });
-  }
+&#x20;     weight: "200g",
 
-  // 分类筛选
-  document.querySelectorAll('.category-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.category-btn').forEach(function(b) { b.classList.remove('active'); });
-      this.classList.add('active');
-      renderProducts(this.dataset.category);
-    });
-  });
+&#x20;     price: 2890,
 
-  // 初始渲染
-  renderProducts('all');
+&#x20;     originalPrice: 3600,
+
+&#x20;     discount: 20,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/eb90667fc89d4a3598188749af7f14fa.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789560\&x-signature=926pZzNwjxywkv%2BW63tRHNTElMI%3D",
+
+&#x20;     tag: "Popular"
+
+&#x20;   },
+
+&#x20;   {
+
+&#x20;     id: 2,
+
+&#x20;     name: "Tabla de Quesos y Fiambres",
+
+&#x20;     category: "quesos",
+
+&#x20;     weight: "500g",
+
+&#x20;     price: 8900,
+
+&#x20;     originalPrice: null,
+
+&#x20;     discount: null,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/e8766f7e1850489e9ebaaf3078781014.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789562\&x-signature=iRYIRz8WGMYeViBPvQYBVPqyjqE%3D",
+
+&#x20;     tag: "Premium"
+
+&#x20;   },
+
+&#x20;   {
+
+&#x20;     id: 3,
+
+&#x20;     name: "Cesta de Frutas y Verduras",
+
+&#x20;     category: "frutas",
+
+&#x20;     weight: "3kg",
+
+&#x20;     price: 4500,
+
+&#x20;     originalPrice: 5800,
+
+&#x20;     discount: 22,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/2096b217ced74474a5faabb36dfadcdc.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789561\&x-signature=8t1v9hYomTRhRWf9GjcT11Yu%2BZ8%3D",
+
+&#x20;     tag: "Oferta"
+
+&#x20;   },
+
+&#x20;   {
+
+&#x20;     id: 4,
+
+&#x20;     name: "Asado Argentino Premium",
+
+&#x20;     category: "carnes",
+
+&#x20;     weight: "1.2kg",
+
+&#x20;     price: 12800,
+
+&#x20;     originalPrice: null,
+
+&#x20;     discount: null,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/033e8290974e4b349558903c70588904.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789563\&x-signature=s5oliUsIEhhhnEP4a%2BKCW9QCLdU%3D",
+
+&#x20;     tag: "Destacado"
+
+&#x20;   },
+
+&#x20;   {
+
+&#x20;     id: 5,
+
+&#x20;     name: "Fusilli con Salsa Pomodoro",
+
+&#x20;     category: "pastas",
+
+&#x20;     weight: "400g",
+
+&#x20;     price: 1890,
+
+&#x20;     originalPrice: 2400,
+
+&#x20;     discount: 21,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/41a0051e84404c7280b4be5b40f98a9f.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789581\&x-signature=hJMwu14cn7UHOLl2po%2F5ab%2F8KFo%3D",
+
+&#x20;     tag: "Nuevo"
+
+&#x20;   },
+
+&#x20;   {
+
+&#x20;     id: 6,
+
+&#x20;     name: "Cocktail de Mariscos Frescos",
+
+&#x20;     category: "mariscos",
+
+&#x20;     weight: "600g",
+
+&#x20;     price: 9600,
+
+&#x20;     originalPrice: null,
+
+&#x20;     discount: null,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/3677516cb2f04977aef52c802ca0a773.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789584\&x-signature=6DE2gzxRP12QR6%2BHk5Z8IzfCryQ%3D",
+
+&#x20;     tag: "Premium"
+
+&#x20;   },
+
+&#x20;   {
+
+&#x20;     id: 7,
+
+&#x20;     name: "Selección de Chocolates",
+
+&#x20;     category: "postres",
+
+&#x20;     weight: "350g",
+
+&#x20;     price: 5200,
+
+&#x20;     originalPrice: 6500,
+
+&#x20;     discount: 20,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/0555f9950c434977b6573fb9ab3419dd.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789583\&x-signature=EdzGReSyGcJDrck9lW4i%2B7weneg%3D",
+
+&#x20;     tag: "Ideal para regalar"
+
+&#x20;   },
+
+&#x20;   {
+
+&#x20;     id: 8,
+
+&#x20;     name: "Ensalada Saludable Premium",
+
+&#x20;     category: "saludable",
+
+&#x20;     weight: "380g",
+
+&#x20;     price: 2100,
+
+&#x20;     originalPrice: null,
+
+&#x20;     discount: null,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/062c21b56a3f4798afc33165b6f83dbe.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789580\&x-signature=LnV2qWxmlEm7Mggga2tn0TYocS4%3D",
+
+&#x20;     tag: "Saludable"
+
+&#x20;   },
+
+&#x20;   {
+
+&#x20;     id: 9,
+
+&#x20;     name: "Pan de Campo Artesanal",
+
+&#x20;     category: "panaderia",
+
+&#x20;     weight: "500g",
+
+&#x20;     price: 1650,
+
+&#x20;     originalPrice: null,
+
+&#x20;     discount: null,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/eb90667fc89d4a3598188749af7f14fa.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789560\&x-signature=926pZzNwjxywkv%2BW63tRHNTElMI%3D",
+
+&#x20;     tag: "Artesanal"
+
+&#x20;   },
+
+&#x20;   {
+
+&#x20;     id: 10,
+
+&#x20;     name: "Queso Parmesano DOP",
+
+&#x20;     category: "quesos",
+
+&#x20;     weight: "300g",
+
+&#x20;     price: 4800,
+
+&#x20;     originalPrice: 5600,
+
+&#x20;     discount: 14,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/e8766f7e1850489e9ebaaf3078781014.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789562\&x-signature=iRYIRz8WGMYeViBPvQYBVPqyjqE%3D",
+
+&#x20;     tag: "Importado"
+
+&#x20;   },
+
+&#x20;   {
+
+&#x20;     id: 11,
+
+&#x20;     name: "Corte de Carne Premium",
+
+&#x20;     category: "carnes",
+
+&#x20;     weight: "800g",
+
+&#x20;     price: 7800,
+
+&#x20;     originalPrice: null,
+
+&#x20;     discount: null,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/033e8290974e4b349558903c70588904.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789563\&x-signature=s5oliUsIEhhhnEP4a%2BKCW9QCLdU%3D",
+
+&#x20;     tag: "Ternera"
+
+&#x20;   },
+
+&#x20;   {
+
+&#x20;     id: 12,
+
+&#x20;     name: "Frutas Tropicales Mix",
+
+&#x20;     category: "frutas",
+
+&#x20;     weight: "1.5kg",
+
+&#x20;     price: 3200,
+
+&#x20;     originalPrice: 4000,
+
+&#x20;     discount: 20,
+
+&#x20;     image: "https://p16-flow-image-sign.ibyteimg.com/tos-mya-i-3rsxbfecgb/rc\_gen\_image/2096b217ced74474a5faabb36dfadcdc.jpeg\~tplv-0es2k971ck-image.image?rcl=20260820114454B861091E4EA609C44184\&rk3s=8e244e95\&rrcfp=02a80fc2\&x-expires=1789789561\&x-signature=8t1v9hYomTRhRWf9GjcT11Yu%2BZ8%3D",
+
+&#x20;     tag: "Fresco"
+
+&#x20;   }
+
+&#x20; ];
+
+
+
+&#x20; var cartCount = 0;
+
+
+
+&#x20; // 格式化价格
+
+&#x20; function formatPrice(price) {
+
+&#x20;   return '$' + price.toLocaleString('es-AR');
+
+&#x20; }
+
+
+
+&#x20; // 生成商品卡片
+
+&#x20; function createProductCard(product) {
+
+&#x20;   var discountBadge = product.discount 
+
+&#x20;     ? '<div style="position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;">-' + product.discount + '%</div>'
+
+&#x20;     : '';
+
+&#x20;   
+
+&#x20;   var tagBadge = product.tag
+
+&#x20;     ? '<div style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,.95);color:var(--text);font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;backdrop-filter:blur(4px);">' + product.tag + '</div>'
+
+&#x20;     : '';
+
+
+
+&#x20;   var originalPrice = product.originalPrice
+
+&#x20;     ? '<span style="font-size:13px;color:var(--muted);text-decoration:line-through;margin-right:8px;">' + formatPrice(product.originalPrice) + '</span>'
+
+&#x20;     : '';
+
+
+
+&#x20;   return '<div class="product-card" data-category="' + product.category + '" style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;">' +
+
+&#x20;     '<div style="position:relative;aspect-ratio:1;overflow:hidden;background:#f5f5f5;">' +
+
+&#x20;       '<img src="' + product.image + '" alt="' + product.name + '" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease;" onerror="this.style.display=\\'none\\'" onmouseover="this.style.transform=\\'scale(1.05)\\'" onmouseout="this.style.transform=\\'scale(1)\\'">' +
+
+&#x20;       discountBadge +
+
+&#x20;       tagBadge +
+
+&#x20;       '<button class="fav-btn" data-id="' + product.id + '" style="position:absolute;bottom:12px;right:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.95);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);backdrop-filter:blur(4px);" onmouseover="this.style.color=\\'var(--accent)\\'" onmouseout="if(!this.classList.contains(\\'favorited\\'))this.style.color=\\'var(--muted)\\'">' +
+
+&#x20;         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
+
+&#x20;       '</button>' +
+
+&#x20;     '</div>' +
+
+&#x20;     '<div style="padding:16px;">' +
+
+&#x20;       '<h4 style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:4px;line-height:1.3;">' + product.name + '</h4>' +
+
+&#x20;       '<p style="font-size:12px;color:var(--muted);margin-bottom:12px;">' + product.weight + '</p>' +
+
+&#x20;       '<div style="display:flex;align-items:baseline;margin-bottom:14px;flex-wrap:wrap;">' +
+
+&#x20;         originalPrice +
+
+&#x20;         '<span style="font-size:20px;font-weight:700;color:var(--accent);">' + formatPrice(product.price) + '</span>' +
+
+&#x20;       '</div>' +
+
+&#x20;       '<button class="add-cart-btn" data-id="' + product.id + '" style="width:100%;padding:10px;border-radius:10px;background:var(--accent-soft);color:var(--text);font-weight:600;font-size:13px;border:1px solid var(--accent);cursor:pointer;font-family:inherit;transition:all .2s ease;" onmouseover="this.style.background=\\'var(--accent)\\';this.style.color=\\'#fff\\'" onmouseout="this.style.background=\\'var(--accent-soft)\\';this.style.color=\\'var(--text)\\'">' +
+
+&#x20;         '<span style="display:flex;align-items:center;justify-content:center;gap:6px;">' +
+
+&#x20;           '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>' +
+
+&#x20;           'Agregar al carrito' +
+
+&#x20;         '</span>' +
+
+&#x20;       '</button>' +
+
+&#x20;     '</div>' +
+
+&#x20;   '</div>';
+
+&#x20; }
+
+
+
+&#x20; // 渲染所有商品
+
+&#x20; function renderProducts(category) {
+
+&#x20;   var grid = document.getElementById('productsGrid');
+
+&#x20;   var filtered = category === 'all' 
+
+&#x20;     ? products 
+
+&#x20;     : products.filter(function(p) { return p.category === category; });
+
+&#x20;   
+
+&#x20;   grid.innerHTML = filtered.map(createProductCard).join('');
+
+&#x20;   
+
+&#x20;   // 绑定添加购物车事件
+
+&#x20;   grid.querySelectorAll('.add-cart-btn').forEach(function(btn) {
+
+&#x20;     btn.addEventListener('click', function(e) {
+
+&#x20;       e.stopPropagation();
+
+&#x20;       cartCount++;
+
+&#x20;       var badge = document.getElementById('cartCount');
+
+&#x20;       badge.textContent = cartCount;
+
+&#x20;       badge.classList.remove('cart-badge');
+
+&#x20;       void badge.offsetWidth;
+
+&#x20;       badge.classList.add('cart-badge');
+
+&#x20;       
+
+&#x20;       // 按钮反馈
+
+&#x20;       btn.style.background = 'var(--accent2)';
+
+&#x20;       btn.style.borderColor = 'var(--accent2)';
+
+&#x20;       btn.style.color = '#fff';
+
+&#x20;       btn.querySelector('span').innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> ¡Agregado!';
+
+&#x20;       setTimeout(function() {
+
+&#x20;         btn.style.background = '';
+
+&#x20;         btn.style.borderColor = '';
+
+&#x20;         btn.style.color = '';
+
+&#x20;         btn.querySelector('span').innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg> Agregar al carrito';
+
+&#x20;       }, 1200);
+
+&#x20;     });
+
+&#x20;   });
+
+
+
+&#x20;   // 绑定收藏按钮事件
+
+&#x20;   grid.querySelectorAll('.fav-btn').forEach(function(btn) {
+
+&#x20;     btn.addEventListener('click', function(e) {
+
+&#x20;       e.stopPropagation();
+
+&#x20;       if (this.classList.contains('favorited')) {
+
+&#x20;         this.classList.remove('favorited');
+
+&#x20;         this.style.color = 'var(--muted)';
+
+&#x20;         this.querySelector('svg').setAttribute('fill', 'none');
+
+&#x20;       } else {
+
+&#x20;         this.classList.add('favorited');
+
+&#x20;         this.style.color = 'var(--accent)';
+
+&#x20;         this.querySelector('svg').setAttribute('fill', 'currentColor');
+
+&#x20;       }
+
+&#x20;     });
+
+&#x20;   });
+
+&#x20; }
+
+
+
+&#x20; // 分类筛选
+
+&#x20; document.querySelectorAll('.category-btn').forEach(function(btn) {
+
+&#x20;   btn.addEventListener('click', function() {
+
+&#x20;     document.querySelectorAll('.category-btn').forEach(function(b) { b.classList.remove('active'); });
+
+&#x20;     this.classList.add('active');
+
+&#x20;     renderProducts(this.dataset.category);
+
+&#x20;   });
+
+&#x20; });
+
+
+
+&#x20; // 初始渲染
+
+&#x20; renderProducts('all');
+
 })();
+
 </script>
+
+
 
 <!-- SocialBar 广告 -->
+
 <script src="https://pl31423676.profitableratecpmnetwork.com/13/a0/ab/13a0ab6582a2098769aa192bcbfab329.js"></script>
 
+
+
 <!-- Popunder SmartLink (可在需要时触发) -->
+
 <script>
+
 // Popunder 智能链接: https://www.profitableratecpmnetwork.com/k1kp0e8de?key=2b21d4ce83ec5cf22c82e920678b6096
+
 // 如需在页面加载时触发popunder，可取消下面注释:
-/*
+
+/\*
+
 (function(){
-  var popunderUrl = 'https://www.profitableratecpmnetwork.com/k1kp0e8de?key=2b21d4ce83ec5cf22c82e920678b6096';
-  document.addEventListener('click', function openPopunder(e){
-    window.open(popunderUrl, '_blank');
-    document.removeEventListener('click', openPopunder);
-  }, {once: true});
+
+&#x20; var popunderUrl = 'https://www.profitableratecpmnetwork.com/k1kp0e8de?key=2b21d4ce83ec5cf22c82e920678b6096';
+
+&#x20; document.addEventListener('click', function openPopunder(e){
+
+&#x20;   window.open(popunderUrl, '\_blank');
+
+&#x20;   document.removeEventListener('click', openPopunder);
+
+&#x20; }, {once: true});
+
 })();
-*/
+
+\*/
+
 </script>
 
+
+
 </html>
+
